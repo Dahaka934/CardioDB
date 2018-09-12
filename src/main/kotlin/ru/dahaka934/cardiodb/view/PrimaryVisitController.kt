@@ -115,6 +115,19 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
 
         fun generateDocConclusion(file: File, patient: Patient, data: Data, visit: Visit): Boolean {
             val creator = DocCreator()
+            creator.paragraph {
+                style = "Top"
+                createRun("ПЕРВИЧНЫЙ ПРИЕМ", true)
+            }
+
+            genDocHeader(creator, patient, data, visit)
+            genDocDiagnosis(creator, patient, data, visit)
+            genDocCurrHelp(creator, patient, data, visit)
+            genDocSurveyPlan(creator, patient, data, visit)
+            genDocTreatPlan(creator, patient, data, visit)
+            genDocRecomms(creator, patient, data, visit)
+            genDocEVN(creator, patient, data, visit)
+            genSignature(creator)
 
             return creator.save(file)
         }
