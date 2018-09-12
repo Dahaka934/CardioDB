@@ -19,8 +19,6 @@ class SecondaryVisitController : BaseVisitController<ScrollPane>() {
 
             genDocHeader(creator, patient, data, visit)
             genDocComplaints(creator, patient, data, visit)
-            genDocDisease(creator, patient, data, visit)
-            genDocAnamInsurance(creator, patient, data, visit)
             genDocObjStatus(creator, patient, data, visit)
             genDocDiagnosis(creator, patient, data, visit)
             genDocCurrHelp(creator, patient, data, visit)

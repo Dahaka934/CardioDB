@@ -32,13 +32,6 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
 
     @FXML lateinit var complaintsP1: TextArea
 
-    @FXML lateinit var anamDiseaseP1: TextArea
-    @FXML lateinit var anamDiseaseP2: TextField
-    @FXML lateinit var anamDiseaseP3: TextField
-    @FXML lateinit var anamDiseaseP4: TextArea
-
-    @FXML lateinit var anamInsuranceP1: TextArea
-
     @FXML lateinit var objStatusP1: TextField
     @FXML lateinit var objStatusP1c: ComboBox<String>
     @FXML lateinit var objStatusP2: TextField
@@ -155,17 +148,6 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
 
         bind(complaintsP1)
 
-        bind(anamDiseaseP1)
-        bind(anamDiseaseP2, "0/0")
-        bind(anamDiseaseP3, "0/0")
-        bind(anamDiseaseP4)
-
-        var tmp1 = "Не имеет листка нетрудоспособности"
-        if (!patientData.job.value.isNullOrEmpty()) {
-            tmp1 += ", ${patientData.job.value}"
-        }
-        bind(anamInsuranceP1, tmp1)
-
         bind(objStatusP1, objStatusP1c, false, true, "удовлетворительное", "средней тяжести", "тяжелое")
         bind(objStatusP2)
         bind(objStatusP3)
@@ -281,19 +263,6 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         fun genDocComplaints(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("ЖАЛОБЫ", true)
             cr.lineSplited(visit.meta("complaintsP1").dot())
-        }
-
-        fun genDocDisease(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("АНАМНЕЗ ЗАБОЛЕВАНИЯ", true)
-            cr.lineSplited(visit.meta("anamDiseaseP1").dot())
-            cr.line("АД максимальное - ${visit.meta("anamDiseaseP2")}мм.рт.ст.  " +
-                    "АД рабочее - ${visit.meta("anamDiseaseP3")}мм.рт.ст.")
-            cr.lineSplited("Постоянно принимает: ${visit.meta("anamDiseaseP4").dot()}")
-        }
-
-        fun genDocAnamInsurance(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("СТРАХОВОЙ АНАМНЕЗ", true)
-            cr.lineSplited(visit.meta("anamInsuranceP1").dot())
         }
 
         fun genDocObjStatus(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {

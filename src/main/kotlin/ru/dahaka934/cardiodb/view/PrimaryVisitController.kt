@@ -15,6 +15,11 @@ import java.io.File
 
 class PrimaryVisitController : BaseVisitController<ScrollPane>() {
 
+    @FXML lateinit var anamDiseaseP1: TextArea
+    @FXML lateinit var anamDiseaseP2: TextField
+    @FXML lateinit var anamDiseaseP3: TextField
+    @FXML lateinit var anamDiseaseP4: TextArea
+
     @FXML lateinit var anamLifeP1: TextArea
     @FXML lateinit var anamLifeP2: TextField
     @FXML lateinit var anamLifeP3: TextField
@@ -33,8 +38,15 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
     @FXML lateinit var allergiesP2: TextField
     @FXML lateinit var allergiesP3: TextField
 
+    @FXML lateinit var anamInsuranceP1: TextArea
+
     override fun init(patient: Patient, data: Patient.Data, visit: Visit) {
         super.init(patient, data, visit)
+
+        bind(anamDiseaseP1)
+        bind(anamDiseaseP2, "0/0")
+        bind(anamDiseaseP3, "0/0")
+        bind(anamDiseaseP4)
 
         bind(anamLifeP1)
         bind(anamLifeP2, "отрицает")
@@ -54,9 +66,23 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
         bind(allergiesP1, "отрицает")
         bind(allergiesP2, "отрицает")
         bind(allergiesP3, "отрицает")
+
+        var tmp1 = "Не имеет листка нетрудоспособности"
+        if (!data.job.value.isNullOrEmpty()) {
+            tmp1 += ", ${data.job.value}"
+        }
+        bind(anamInsuranceP1, tmp1)
     }
 
     companion object {
+        fun genDocDisease(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("АНАМНЕЗ ЗАБОЛЕВАНИЯ", true)
+            cr.lineSplited(visit.meta("anamDiseaseP1").dot())
+            cr.line("АД максимальное - ${visit.meta("anamDiseaseP2")}мм.рт.ст.  " +
+                    "АД рабочее - ${visit.meta("anamDiseaseP3")}мм.рт.ст.")
+            cr.lineSplited("Постоянно принимает: ${visit.meta("anamDiseaseP4").dot()}")
+        }
+
         fun genDocAnamLife(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("АНАМНЕЗ ЖИЗНИ", true)
             cr.line("Перенесенные заболевания, травмы, операции: ${visit.meta("anamLifeP1").dot()}")
@@ -85,6 +111,11 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             cr.line("Лекарственные: ${visit.meta("allergiesP1").dot()}")
             cr.line("Пищевые: ${visit.meta("allergiesP2").dot()}")
             cr.line("Прочие: ${visit.meta("allergiesP3").dot()}")
+        }
+
+        fun genDocAnamInsurance(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("СТРАХОВОЙ АНАМНЕЗ", true)
+            cr.lineSplited(visit.meta("anamInsuranceP1").dot())
         }
 
         fun generateDocReception(file: File, patient: Patient, data: Data, visit: Visit): Boolean {
