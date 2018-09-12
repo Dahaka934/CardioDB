@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dahaka934.cardiodb.view.EditPatientController">
+    <children>
+        <Button fx:id="buttonSave" layoutX="492.0" layoutY="349.0" mnemonicParsing="false" text="Сохранить" />
+        <Button fx:id="buttonCancel" layoutX="425.0" layoutY="349.0" mnemonicParsing="false" text="Отмена" />
+        <GridPane layoutX="29.0" layoutY="27.0" prefHeight="244.0" prefWidth="545.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="191.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="354.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label prefHeight="30.0" text="ФИО:">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="30.0" text="Дата рождения:" GridPane.rowIndex="2">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="30.0" text="Адрес проживания:" GridPane.rowIndex="3">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="30.0" text="Место работы, должность:" GridPane.rowIndex="4">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label prefHeight="30.0" text="Контактные данные (Тел.):" GridPane.rowIndex="5">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="fieldName" prefHeight="30.0" GridPane.columnIndex="1" />
+                <DatePicker fx:id="fieldBirthday" prefHeight="30.0" prefWidth="377.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="fieldAddress" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <right>
+                        <ComboBox fx:id="comboBoxJob" prefHeight="30.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
+                    </right>
+                    <center>
+                        <TextField fx:id="fieldJob" prefHeight="30.0" prefWidth="126.0" BorderPane.alignment="CENTER" />
+                    </center>
+                </BorderPane>
+                <TextField fx:id="fieldTelephone" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label prefHeight="30.0" text="Пол:" GridPane.rowIndex="1">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <ChoiceBox fx:id="comboBoxSex" prefHeight="30.0" prefWidth="366.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            </children>
+        </GridPane>
+    </children>
+</Pane>
