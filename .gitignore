@@ -1,0 +1,11 @@
+#IntelliJ project files
+.idea
+out
+
+#Gradle
+.gradle
+build
+
+#CardioBD
+data
+/config.properties
