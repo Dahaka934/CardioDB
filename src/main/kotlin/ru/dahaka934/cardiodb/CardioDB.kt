@@ -3,6 +3,7 @@ package ru.dahaka934.cardiodb
 import javafx.application.Application
 import javafx.scene.image.Image
 import javafx.stage.Stage
+import ru.dahaka934.cardiodb.data.MKB10
 import ru.dahaka934.cardiodb.data.PatientRegistry
 import java.util.concurrent.Executors
 
@@ -26,6 +27,7 @@ class CardioDB : Application() {
     }
 
     override fun start(primaryStage: Stage) {
+        MKB10.reloadAsync()
         AppProperties.reload()
     }
 
