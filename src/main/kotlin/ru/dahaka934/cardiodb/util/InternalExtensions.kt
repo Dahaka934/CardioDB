@@ -3,6 +3,7 @@ package ru.dahaka934.cardiodb.util
 import javafx.concurrent.Task
 import org.apache.commons.io.FileUtils
 import ru.dahaka934.cardiodb.CardioDB
+import ru.dahaka934.cardiodb.view.internal.FXHelper
 import java.io.File
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
@@ -21,7 +22,7 @@ inline fun <T> tryWithError(msg: String = "Неожиданная ошибка",
     return try {
         block()
     } catch (e: Exception) {
-        // TODO: showError(msg, e)
+        FXHelper.showError(msg, e)
         null
     }
 }
@@ -30,7 +31,7 @@ inline fun <T> tryWithError(msg: String = "Неожиданная ошибка",
     return try {
         block()
     } catch (e: Exception) {
-        // TODO: showError(msg, e)
+        FXHelper.showError(msg, e)
         def
     }
 }

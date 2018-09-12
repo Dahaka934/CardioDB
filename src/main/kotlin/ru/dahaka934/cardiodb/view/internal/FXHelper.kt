@@ -3,12 +3,42 @@ package ru.dahaka934.cardiodb.view.internal
 import javafx.application.Platform
 import javafx.event.Event
 import javafx.scene.Node
-import javafx.scene.control.Button
-import javafx.scene.control.TableView
+import javafx.scene.control.*
+import javafx.scene.control.Alert.AlertType.*
+import javafx.scene.control.ButtonBar.ButtonData.*
 import javafx.scene.input.KeyCode.*
 import javafx.scene.input.KeyEvent
+import javafx.scene.layout.VBox
+import ru.dahaka934.cardiodb.data.Diagnose
+import ru.dahaka934.cardiodb.data.Patient.Sex
+import ru.dahaka934.cardiodb.data.Visit.Type
+import ru.dahaka934.cardiodb.util.LocalizedEnumConverter
+import java.io.PrintWriter
+import java.io.StringWriter
 
 object FXHelper {
+    fun showError(msg: String, e: Exception?) {
+        Alert(ERROR).apply {
+            title = "Error"
+            headerText = msg
+
+            if (e != null) {
+                val sw = StringWriter()
+                val pw = PrintWriter(sw)
+                e.printStackTrace(pw)
+
+                val textArea = TextArea()
+                textArea.text = sw.toString()
+
+                val dialogPaneContent = VBox()
+                dialogPaneContent.children.addAll(Label("Stack Trace:"), textArea)
+
+                // Set content for Dialog Pane
+                dialogPane.content = dialogPaneContent
+            }
+        }.showAndWait()
+    }
+
     fun bindTabOnPressEnter(node: Node) {
         node.setOnKeyPressed {
             if (it.code == ENTER) {
