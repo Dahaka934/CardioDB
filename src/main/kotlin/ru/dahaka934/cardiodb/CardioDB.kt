@@ -1,6 +1,7 @@
 package ru.dahaka934.cardiodb
 
 import javafx.application.Application
+import javafx.beans.property.SimpleStringProperty
 import javafx.scene.image.Image
 import javafx.stage.Stage
 import ru.dahaka934.cardiodb.data.MKB10
@@ -16,6 +17,7 @@ class CardioDB : Application() {
 
         val registry = PatientRegistry()
         val executor = Executors.newSingleThreadExecutor()
+        val user = SimpleStringProperty()
 
         @JvmStatic fun main(args: Array<String>) {
             Application.launch(CardioDB::class.java, *args)
@@ -29,11 +31,13 @@ class CardioDB : Application() {
     override fun start(primaryStage: Stage) {
         MKB10.reloadAsync()
         AppProperties.reload()
+        user.value = AppProperties.getProperty("user")
     }
 
     override fun stop() {
         registry.saveOnExitAsync()
         executor.shutdown()
         AppProperties.save()
+        AppProperties.setProperty("user", user.value ?: "")
     }
 }
