@@ -41,7 +41,7 @@ class MainController : Controller<BorderPane>() {
 
         val node = CardioDB.loadNode<VBox>("PatientTableLayout.fxml")
         tabDataBase.content = node
-        CardioDB.getController<PatientTableController>().let {
+        CardioDB.getLoadedController<PatientTableController>().let {
             it.init(stage, node)
             it.init(this, "База данных")
             it.init()
@@ -56,7 +56,7 @@ class MainController : Controller<BorderPane>() {
 
     fun <N : Node, T : ControllerTab<N>> openTab(name: String, fxmlPath: String): T {
         val node = CardioDB.loadNode<N>(fxmlPath)
-        val controller = CardioDB.getController<T>()
+        val controller = CardioDB.getLoadedController<T>()
         controller.let {
             it.init(stage, node)
             it.init(this, name)

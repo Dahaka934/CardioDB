@@ -41,14 +41,14 @@ class CardioDB : Application() {
             return loader.load<N>(IOTools.resourceStream("/view/$path"))
         }
 
-        fun <C> getController(): C = loader.getController()
+        fun <C> getLoadedController(): C = loader.getController()
 
         inline fun <C> createWindow(path: String, stage: Stage = Stage(), block: Stage.(C) -> Unit): Stage {
             return stage.apply {
                 val node = loadNode<Parent>(path)
                 icons.add(icon)
                 scene = Scene(node)
-                val controller = getController<C>()
+                val controller = getLoadedController<C>()
                 block(stage, controller!!)
                 if (controller is Controller<*>) {
                     (controller as Controller<Node>).init(stage, node)

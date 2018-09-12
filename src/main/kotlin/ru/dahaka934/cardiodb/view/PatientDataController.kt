@@ -173,7 +173,22 @@ class PatientDataController : ControllerTab<Pane>() {
     }
 
     @FXML fun openVisit(e: ActionEvent?) {
-        
+        val visit = table.selectionModel.selectedItem ?: return
+        val type = visit.type.value ?: PRIMARY
+        val tab = when (type) {
+            PRIMARY   -> {
+                val name = "$tabName - ${type.localName}"
+                main.openTab<ScrollPane, PrimaryVisitController>(name, "PrimaryVisitLayout.fxml")
+            }
+            SECONDARY -> {
+                val name = "$tabName - ${type.localName}"
+                main.openTab<ScrollPane, SecondaryVisitController>(name, "SecondaryVisitLayout.fxml")
+            }
+        }
+
+        tab.node.prefHeight = Double.NEGATIVE_INFINITY
+        tab.init(patient, patientData, visit)
+        patient.recalcLastVisit(patientData)
     }
 
     @FXML fun onGenDocReception(e: ActionEvent) {
