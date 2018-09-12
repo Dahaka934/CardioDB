@@ -1,7 +1,12 @@
 package ru.dahaka934.cardiodb.util
 
+import javafx.concurrent.Task
 import org.apache.commons.io.FileUtils
+import ru.dahaka934.cardiodb.CardioDB
 import java.io.File
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.Executor
+import java.util.function.Supplier
 
 inline fun <T> tryWithIgnore(block: () -> T): T? {
     return try {
@@ -65,3 +70,24 @@ fun File.toExistsFileForce(): File {
     }
     return this
 }
+
+inline fun <T> Executor.completable(crossinline action: () -> T): CompletableFuture<T> {
+    return CompletableFuture.supplyAsync(Supplier { action() }, this)
+}
+
+inline fun <T, U> CompletableFuture<T>.thenApplyFX(crossinline action: (T) -> U): CompletableFuture<U> {
+    val ret = CompletableFuture<U>()
+    val jfxTask = object : Task<Unit>() {
+        override fun call() {}
+    }.apply {
+        setOnSucceeded {
+            ret.complete(action(this@thenApplyFX.get()))
+        }
+        setOnFailed { ret.completeExceptionally(exception) }
+        setOnCancelled { ret.cancel(false) }
+    }
+    CardioDB.executor.execute(jfxTask)
+    return ret
+}
+
+
