@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="773.0" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dahaka934.cardiodb.view.PatientDataController">
+    <children>
+        <ToolBar nodeOrientation="RIGHT_TO_LEFT">
+            <items>
+                <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#removeVisit" text="Удалить"/>
+                <Button fx:id="buttonOpen" mnemonicParsing="false" onAction="#openVisit" text="Открыть"/>
+                <SplitMenuButton fx:id="buttonDoc" mnemonicParsing="false" onAction="#onGenDocReception"
+                                 text="Документ">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onGenDocReception" text="Прием"/>
+                        <MenuItem mnemonicParsing="false" onAction="#onGenDocConclusion" text="Заключение"/>
+                    </items>
+                </SplitMenuButton>
+                <SplitMenuButton fx:id="buttonCopy" mnemonicParsing="false" onAction="#copyVisit" text="Копировать">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#copyVisit1" text="Первичный"/>
+                        <MenuItem mnemonicParsing="false" onAction="#copyVisit2" text="Повторный"/>
+                    </items>
+                </SplitMenuButton>
+                <SplitMenuButton fx:id="buttonNew" mnemonicParsing="false" onAction="#newVisit" text="Новый">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newVisit1" text="Первичный"/>
+                        <MenuItem mnemonicParsing="false" onAction="#newVisit2" text="Повторный"/>
+                    </items>
+                </SplitMenuButton>
+            </items>
+        </ToolBar>
+        <SplitPane dividerPositions="0.3" VBox.vgrow="ALWAYS">
+            <items>
+                <BorderPane>
+                    <top>
+                        <GridPane BorderPane.alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <children>
+                                <VBox GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
+                                      GridPane.vgrow="ALWAYS">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="ФИО:" VBox.vgrow="ALWAYS"/>
+                                        <Label fx:id="fieldName" text="Label" underline="true"/>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="Пол:"/>
+                                        <Label fx:id="fieldSex" text="Label" underline="true"/>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="Дата рождения:"/>
+                                        <Label fx:id="fieldBirthday" text="Label" underline="true"/>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="Адрес проживания:"/>
+                                        <Label fx:id="fieldAddress" text="Label" underline="true"/>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="4">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="Место работы, должность:"/>
+                                        <Label fx:id="fieldJob" text="Label" underline="true"/>
+                                    </children>
+                                </VBox>
+                                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="5">
+                                    <children>
+                                        <Label style="-fx-font-weight: bold;" text="Контактные данные:"/>
+                                        <Label fx:id="fieldTelephone" text="Label" underline="true"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <padding>
+                                <Insets left="10.0" top="10.0"/>
+                            </padding>
+                        </GridPane>
+                    </top>
+                </BorderPane>
+                <BorderPane>
+                    <center>
+                        <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <columns>
+                                <TableColumn fx:id="columnIndex" editable="false" prefWidth="32.0" resizable="false"
+                                             sortable="false"/>
+                                <TableColumn fx:id="columnType" prefWidth="137.0" text="Тип осмотра"/>
+                                <TableColumn fx:id="columnDate" prefWidth="138.0" text="Дата консультации"/>
+                            </columns>
+                            <contextMenu>
+                                <ContextMenu fx:id="contextMenuTable">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#openVisit" text="Открыть"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#copyVisit1"
+                                                  text="Копировать первичный"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#copyVisit2"
+                                                  text="Копировать повторный"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#removeVisit" text="Удалить"/>
+                                    </items>
+                                </ContextMenu>
+                            </contextMenu>
+                        </TableView>
+                    </center>
+                </BorderPane>
+            </items>
+        </SplitPane>
+    </children>
+</VBox>

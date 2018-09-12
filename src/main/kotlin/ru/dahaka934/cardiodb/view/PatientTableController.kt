@@ -10,6 +10,7 @@ import javafx.scene.control.ButtonBar.ButtonData.YES
 import javafx.scene.control.SelectionMode.SINGLE
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCode.*
+import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import javafx.stage.Modality.APPLICATION_MODAL
 import javafx.stage.StageStyle
@@ -170,7 +171,13 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
     }
 
     @FXML fun openPatient(e: ActionEvent?) {
-        
+        val patient = table.selectionModel.selectedItem ?: return
+        val fnp = patient.name.value.split(" ")
+        val name = fnp[0] + " " + fnp.subList(1, fnp.size).joinToString(" ") {
+            it.getOrNull(0)?.let { "$it." } ?: ""
+        }
+        val tab = main.openTab<Pane, PatientDataController>(name, "PatientDataLayout.fxml")
+        tab.setPatient(patient)
     }
 
     @FXML fun openFiltering(e: ActionEvent?) {
