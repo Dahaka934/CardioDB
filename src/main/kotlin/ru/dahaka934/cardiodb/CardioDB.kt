@@ -21,9 +21,8 @@ class CardioDB : Application() {
         lateinit var app: CardioDB
             private set
 
-        private val loader = FXMLLoader().apply {
-            classLoader = FXClassLoader(FXMLLoader.getDefaultClassLoader())
-        }
+        private lateinit var loader: FXMLLoader
+        private val fxClassLoader = FXClassLoader(FXMLLoader.getDefaultClassLoader())
 
         val icon = Image(CardioDB::class.java.getResourceAsStream("/assets/CardioDB.png"))
 
@@ -35,7 +34,12 @@ class CardioDB : Application() {
             Application.launch(CardioDB::class.java, *args)
         }
 
-        fun <N : Node> loadNode(path: String): N = loader.load<N>(IOTools.resourceStream("/view/$path"))
+        fun <N : Node> loadNode(path: String): N {
+            loader = FXMLLoader().apply {
+                classLoader = fxClassLoader
+            }
+            return loader.load<N>(IOTools.resourceStream("/view/$path"))
+        }
 
         fun <C> getController(): C = loader.getController()
 

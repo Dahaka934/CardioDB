@@ -9,6 +9,7 @@ import javafx.scene.control.TabPane.TabClosingPolicy.ALL_TABS
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
+import javafx.scene.layout.VBox
 import javafx.stage.StageStyle
 import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.view.internal.Controller
@@ -36,6 +37,15 @@ class MainController : Controller<BorderPane>() {
         fieldUser.textProperty().bind(CardioDB.user)
         if (fieldUser.text.isNullOrEmpty()) {
             Platform.runLater { requestUser() }
+        }
+
+        val node = CardioDB.loadNode<VBox>("PatientTableLayout.fxml")
+        tabDataBase.content = node
+        CardioDB.getController<PatientTableController>().let {
+            it.init(stage, node)
+            it.init(this, "База данных")
+            it.init()
+            it.focusNode()
         }
 
         buttonSaveAll.disableProperty().bind(Bindings.`when`(CardioDB.registry.isDirty).then(false).otherwise(true))

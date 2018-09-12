@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dahaka934.cardiodb.view.PatientTableController">
+    <children>
+        <ToolBar>
+            <items>
+                <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#newPatient" text="Новый" />
+                <Button fx:id="buttonModify" mnemonicParsing="false" onAction="#editPatient" text="Изменить" />
+            <Button fx:id="buttonOpen" mnemonicParsing="false" onAction="#openPatient" text="Открыть" />
+                <Pane nodeOrientation="LEFT_TO_RIGHT" HBox.hgrow="SOMETIMES" />
+                <Button fx:id="buttonOpenFiltering" mnemonicParsing="false" onAction="#openFiltering" text="Фильтрация" />
+                <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#removePatient" text="Удалить" />
+            </items>
+        </ToolBar>
+        <BorderPane VBox.vgrow="ALWAYS">
+            <center>
+                <TableView fx:id="table" BorderPane.alignment="CENTER">
+                    <columns>
+                  <TableColumn fx:id="columnIndex" editable="false" prefWidth="32.0" resizable="false" sortable="false" />
+                        <TableColumn fx:id="columnName" editable="false" minWidth="50.0" prefWidth="443.0" text="ФИО" />
+                        <TableColumn fx:id="columnBirthday" editable="false" minWidth="50.0" prefWidth="200.0" text="Дата рождения" />
+                        <TableColumn fx:id="columnLastVisit" editable="false" minWidth="50.0" prefWidth="200.0" text="Дата последнего приема" />
+                    </columns>
+                    <contextMenu>
+                        <ContextMenu fx:id="contextMenuTable">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#openPatient" text="Открыть" />
+                                <MenuItem mnemonicParsing="false" onAction="#editPatient" text="Изменить" />
+                                <MenuItem mnemonicParsing="false" onAction="#removePatient" text="Удалить" />
+                            </items>
+                        </ContextMenu>
+                    </contextMenu>
+                </TableView>
+            </center>
+        </BorderPane>
+        <ToolBar fx:id="filterPanel">
+            <items>
+                <TextField fx:id="fieldFilter" prefHeight="25.0" prefWidth="400.0" />
+                <Button fx:id="buttonFilterAccept" mnemonicParsing="false" onAction="#filterPatients" text="Фильтровать" />
+                <Button fx:id="buttonFilterCancel" mnemonicParsing="false" onAction="#closeFiltering" text="Отменить" />
+            </items>
+        </ToolBar>
+    </children>
+</VBox>
