@@ -17,7 +17,10 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object FXHelper {
-    
+    val convSex = LocalizedEnumConverter(Sex::class.java)
+    val convVisitType = LocalizedEnumConverter(Type::class.java)
+    val convDiagnosisType = LocalizedEnumConverter(Diagnose.Type::class.java)
+
     fun alertYesNo(): Alert {
         return Alert(CONFIRMATION).apply {
             buttonTypes.clear()
