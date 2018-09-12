@@ -20,6 +20,7 @@ class MainController : Controller<BorderPane>() {
     @FXML lateinit var tabDataBase: Tab
 
     @FXML lateinit var buttonSaveAll: Button
+    @FXML lateinit var buttonCloseTab: Button
 
     @FXML lateinit var fieldUser: Label
 
@@ -51,6 +52,14 @@ class MainController : Controller<BorderPane>() {
         buttonSaveAll.disableProperty().bind(Bindings.`when`(CardioDB.registry.isDirty).then(false).otherwise(true))
         buttonSaveAll.setOnAction {
             CardioDB.registry.saveOnExitAsync()
+        }
+
+        buttonCloseTab.disableProperty().bind(Bindings.equal(0, tabPane.selectionModel.selectedIndexProperty()))
+        buttonCloseTab.setOnAction {
+            tabPane.selectionModel.selectedItem?.apply {
+                onClosed?.handle(null)
+                tabPane.tabs.remove(this)
+            }
         }
     }
 
