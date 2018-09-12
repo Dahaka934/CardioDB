@@ -7,5 +7,5 @@ out
 build
 
 #CardioBD
-data
+/data
 /config.properties
