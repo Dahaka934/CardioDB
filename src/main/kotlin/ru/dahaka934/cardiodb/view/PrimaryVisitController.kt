@@ -9,6 +9,7 @@ import ru.dahaka934.cardiodb.data.Patient
 import ru.dahaka934.cardiodb.data.Patient.Data
 import ru.dahaka934.cardiodb.data.Patient.Sex.MALE
 import ru.dahaka934.cardiodb.data.Visit
+import ru.dahaka934.cardiodb.util.DocCreator
 import java.io.File
 
 class PrimaryVisitController : BaseVisitController<ScrollPane>() {
@@ -56,11 +57,15 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
 
     companion object {
         fun generateDocReception(file: File, patient: Patient, data: Data, visit: Visit): Boolean {
-            return true
+            val creator = DocCreator()
+
+            return creator.save(file)
         }
 
         fun generateDocConclusion(file: File, patient: Patient, data: Data, visit: Visit): Boolean {
-            return true
+            val creator = DocCreator()
+
+            return creator.save(file)
         }
     }
 }
