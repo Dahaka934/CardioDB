@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dahaka934.cardiodb.view.DiagnosisTableController">
+   <children>
+      <HBox>
+         <children>
+          <Button fx:id="buttonNew" mnemonicParsing="false" onAction="#newDiagnose" text="Новый">
+               <HBox.margin>
+                  <Insets bottom="5.0" right="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="buttonModify" mnemonicParsing="false" onAction="#modifyDiagnose" text="Изменить">
+               <HBox.margin>
+                  <Insets bottom="5.0" right="5.0" />
+               </HBox.margin></Button>
+            <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#deleteDiagnose" text="Удалить">
+               <HBox.margin>
+                  <Insets bottom="5.0" right="5.0" />
+               </HBox.margin></Button>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <TableView fx:id="table" prefHeight="200.0">
+        <columns>
+            <TableColumn fx:id="columnIndex" prefWidth="32.0" />
+          <TableColumn fx:id="columnType" prefWidth="101.0" text="Тип диагноза" />
+          <TableColumn fx:id="columnCode" prefWidth="106.0" text="Код МКБ-10" />
+            <TableColumn fx:id="columnInfo" prefWidth="292.0" text="Наименование" />
+        </columns>
+         <contextMenu>
+            <ContextMenu fx:id="contextMenuTable">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#modifyDiagnose" text="Изменить" />
+                  <MenuItem mnemonicParsing="false" onAction="#deleteDiagnose" text="Удалить" />
+              </items>
+            </ContextMenu>
+         </contextMenu>
+      </TableView>
+   </children>
+</VBox>
