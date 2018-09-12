@@ -17,6 +17,14 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object FXHelper {
+    
+    fun alertYesNo(): Alert {
+        return Alert(CONFIRMATION).apply {
+            buttonTypes.clear()
+            buttonTypes.addAll(ButtonType("Да", YES), ButtonType("Нет", NO))
+        }
+    }
+
     fun showError(msg: String, e: Exception?) {
         Alert(ERROR).apply {
             title = "Error"
