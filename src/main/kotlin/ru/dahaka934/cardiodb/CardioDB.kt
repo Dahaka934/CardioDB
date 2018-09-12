@@ -70,7 +70,7 @@ class CardioDB : Application() {
     override fun stop() {
         registry.saveOnExitAsync()
         executor.shutdown()
-        AppProperties.save()
         AppProperties.setProperty("user", user.value ?: "")
+        AppProperties.save()
     }
 }
