@@ -24,7 +24,9 @@ class Visit : Listenable {
     val diagnoses = FXCollections.observableArrayList<Diagnose>()
     val meta = FXCollections.observableHashMap<String, SimpleStringProperty>()
 
-    fun metaProp(id: String, def: String = "") = meta.getOrPut(id) { SimpleStringProperty(def) }
+    fun metaProperty(id: String, def: String = "") = meta.getOrPut(id) { SimpleStringProperty(def) }
+
+    fun meta(id: String, def: String = "") = metaProperty(id, def).value ?: ""
 
     fun copy() = Visit().also {
         it.type.value = type.value

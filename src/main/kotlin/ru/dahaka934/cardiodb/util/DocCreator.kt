@@ -6,12 +6,31 @@ import org.apache.poi.xwpf.usermodel.XWPFRun
 import java.io.File
 
 class DocCreator {
-    companion object {
-        const val styleHeader = "Top"
-        const val styleText = "Text"
+    val doc = XWPFDocument(IOTools.resourceStream("/assets/template.docx"))
+
+    init {
+        repeat(doc.bodyElements.size) {
+            doc.removeBodyElement(it)
+        }
     }
 
-    val doc = XWPFDocument(IOTools.resourceStream("/assets/template.docx"))
+    inline fun paragraph(block: XWPFParagraph.() -> Unit = {}) {
+        doc.createParagraph {
+            block()
+        }
+    }
+
+    fun line(text: String = "", bold: Boolean = false) {
+        doc.createParagraph {
+            createRun(text, bold)
+        }
+    }
+
+    fun lineSplited(text: String = "", bold: Boolean = false) {
+        text.split("\n").forEach {
+            line(it, bold)
+        }
+    }
 
     fun save(file: File): Boolean {
         return tryWithError("Не удалось сохранить файл '${file.name}'") {
@@ -30,9 +49,7 @@ inline fun XWPFDocument.createParagraph(block: XWPFParagraph.() -> Unit) {
 inline fun XWPFParagraph.createRun(text: String, bold: Boolean = false, block: XWPFRun.() -> Unit = {}) {
     createRun().apply {
         setText(text)
-        if (bold) {
-            isBold = bold
-        }
+        isBold = bold
         block()
     }
 }

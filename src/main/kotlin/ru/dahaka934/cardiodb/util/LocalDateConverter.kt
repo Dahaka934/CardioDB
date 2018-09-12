@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 object LocalDateConverter : StringConverter<LocalDate?>() {
     val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    override fun toString(obj: LocalDate?): String? {
+    override fun toString(obj: LocalDate?): String {
         return obj?.format(formatter) ?: ""
     }
 

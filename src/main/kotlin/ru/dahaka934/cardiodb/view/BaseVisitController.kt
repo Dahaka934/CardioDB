@@ -6,12 +6,18 @@ import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.util.converter.BooleanStringConverter
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment.CENTER
 import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Patient
+import ru.dahaka934.cardiodb.data.Patient.Data
 import ru.dahaka934.cardiodb.data.Visit
+import ru.dahaka934.cardiodb.util.DocCreator
 import ru.dahaka934.cardiodb.util.LocalDateConverter
 import ru.dahaka934.cardiodb.util.LocalDateISOConverter
+import ru.dahaka934.cardiodb.util.createRun
 import ru.dahaka934.cardiodb.view.MainController.ControllerTab
+import java.math.BigInteger
 
 abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
     private lateinit var patient: Patient
@@ -66,6 +72,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
     @FXML lateinit var objStatusP20c: ComboBox<String>
     @FXML lateinit var objStatusP21: TextField
     @FXML lateinit var objStatusP21c: ComboBox<String>
+    @FXML lateinit var objStatusP22: ComboBox<String>
 
     @FXML lateinit var currHelpP1: CheckBox
     @FXML lateinit var currHelpP2: TextArea
@@ -86,19 +93,19 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
     @FXML lateinit var controllerDiagnosis: DiagnosisTableController
 
     fun bind(node: TextInputControl, defValue: String = "") {
-        node.textProperty().bindBidirectional(visit.metaProp(node.id, defValue))
+        node.textProperty().bindBidirectional(visit.metaProperty(node.id, defValue))
         needUnbind += node
     }
 
     fun bind(node: ComboBox<String>, vararg values: String) {
-        node.valueProperty().bindBidirectional(visit.metaProp(node.id, values.getOrNull(0) ?: ""))
+        node.valueProperty().bindBidirectional(visit.metaProperty(node.id, values.getOrNull(0) ?: ""))
         node.items.addAll(values)
         needUnbind += node
     }
 
     fun bind(node: DatePicker, defValue: String = "") {
         node.valueProperty().let {
-            val p = visit.metaProp(node.id, defValue)
+            val p = visit.metaProperty(node.id, defValue)
             it.set(LocalDateISOConverter.fromString(p.value))
             Bindings.bindBidirectional(p, it, LocalDateISOConverter)
         }
@@ -107,7 +114,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
 
     fun bind(node: CheckBox, defValue: Boolean) {
         node.selectedProperty().let {
-            val p = visit.metaProp(node.id, defValue.toString())
+            val p = visit.metaProperty(node.id, defValue.toString())
             val conv = BooleanStringConverter()
             it.set(conv.fromString(p.value) ?: false)
             Bindings.bindBidirectional(p, it, conv)
@@ -187,23 +194,24 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(objStatusP7)
         bind(objStatusP8)
         bind(objStatusP9, "ЧСС=PS", "ЧЖС≠PS")
-        bind(objStatusP10, "NN уд/мин.")
+        bind(objStatusP10, "00")
         bind(objStatusP11, objStatusP11c, true, false, "ритмичный", "аритмичный", "дефицита пульса нет",
              "удовлетворительное наполнение", "напряжение")
         bind(objStatusP12, objStatusP12c, true, false, "ясные", "звучные", "приглушены", "глухие", "ритмичные")
         bind(objStatusP13)
         bind(objStatusP14, objStatusP14c, true, false, "не выслушиваются", "систолический выслушивается",
              "диастолический выслушивается")
-        bind(objStatusP15)
-        bind(objStatusP16, objStatusP16c, true, false, "дыхание везикулярное", "дыхание жесткой", "дыхание жестковатое",
-             "дыхание ослабленное", "дыхание везикулярное", "сухие хрипы", "влажные хрипы", "хрипов нет")
+        bind(objStatusP15, "00")
+        bind(objStatusP16, objStatusP16c, true, false, "везикулярное", "жесткое", "жестковатое",
+             "ослабленное", "сухие хрипы", "влажные хрипы", "хрипов нет")
         bind(objStatusP17, objStatusP17c, true, false, "мягкий", "напряжен", "безболезненный", "болезненный")
-        bind(objStatusP18, objStatusP18c, true, true, "ну уровне реберной дуги",
-             "выступает из под края реберной дуги на NN см")
-        bind(objStatusP19, objStatusP19c, true, true, "безболезненный с обеих сторон", "болезненный")
+        bind(objStatusP18, objStatusP18c, true, true, "на уровне реберной дуги",
+             "выступает из-под края реберной дуги на NN см")
+        bind(objStatusP19, objStatusP19c, true, true, "безболезненно с обеих сторон", "болезненно")
         bind(objStatusP20, objStatusP20c, true, true, "нет", "отеки голеней", "пастозность", "лёгкая пастозность")
         bind(objStatusP21, objStatusP21c, true, true, "не изменены", "запоры", "поносы", "неустойчивый стул",
              "частое мочеиспускание", "затруднение при мочеиспускание")
+        bind(objStatusP22, "клинический", "предварительный")
 
         bind(currHelpP1, true)
         bind(currHelpP2)
@@ -236,7 +244,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         patient.recalcLastVisit(patientData)
 
         needUnbind.forEach {
-            val other = visit.metaProp(it.id)
+            val other = visit.metaProperty(it.id)
             when (it) {
                 is TextInputControl -> other.unbindBidirectional(it.textProperty())
                 is ComboBoxBase<*>  -> other.unbindBidirectional(it.valueProperty())
@@ -245,5 +253,176 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         }
 
         controllerDiagnosis.onClose()
+    }
+
+    companion object {
+        fun convertedDate(dateISO: String): String {
+            return LocalDateConverter.toString(LocalDateISOConverter.fromString(dateISO))
+        }
+
+        fun String?.dot(): String {
+            if (this == null || this.isEmpty()) {
+                return "."
+            } else if (this.last() == '.') {
+                return this
+            }
+            return this + '.'
+        }
+
+        fun genDocHeader(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("ФИО пациента:  ${patient.name.value.dot()}                                " +
+                    "Дата рождения:  ${LocalDateConverter.toString(patient.birthday.value).dot()}")
+
+            cr.line()
+            cr.line("Дата консльтации:  ${LocalDateConverter.toString(patient.lastVisit.value).dot()}")
+            cr.line()
+        }
+
+        fun genDocComplaints(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("ЖАЛОБЫ", true)
+            cr.lineSplited(visit.meta("complaintsP1").dot())
+        }
+
+        fun genDocDisease(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("АНАМНЕЗ ЗАБОЛЕВАНИЯ", true)
+            cr.lineSplited(visit.meta("anamDiseaseP1").dot())
+            cr.line("АД максимальное - ${visit.meta("anamDiseaseP2")}мм.рт.ст.  " +
+                    "АД рабочее - ${visit.meta("anamDiseaseP3")}мм.рт.ст.")
+            cr.lineSplited("Постоянно принимает: ${visit.meta("anamDiseaseP4").dot()}")
+        }
+
+        fun genDocAnamInsurance(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("СТРАХОВОЙ АНАМНЕЗ", true)
+            cr.lineSplited(visit.meta("anamInsuranceP1").dot())
+        }
+
+        fun genDocObjStatus(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("ОБЪЕКТИВНЫЙ СТАТУС", true)
+            cr.line("Общее состояние: ${visit.meta("objStatusP1").dot()} " +
+                    "Температура: ${visit.meta("objStatusP2")}C.")
+            cr.line("Рост: ${visit.meta("objStatusP3")}см. " +
+                    "Масса тела: ${visit.meta("objStatusP4")}см. " +
+                    "ИМТ: ${visit.meta("objStatusP5").dot()}")
+            cr.line("Кожные покровы ${visit.meta("objStatusP6").dot()}")
+            cr.line("АД: левая рука ${visit.meta("objStatusP7")}мм.рт.ст., " +
+                    "правая рука ${visit.meta("objStatusP8")}мм.рт.ст. " +
+                    "${visit.meta("objStatusP9")}: ${visit.meta("objStatusP10")} уд/мин, " +
+                    visit.meta("objStatusP11").dot())
+            cr.line("Тоны сердца ${visit.meta("objStatusP12")}, " +
+                    "акцент ${visit.meta("objStatusP13")}, " +
+                    "шумы ${visit.meta("objStatusP14").dot()}")
+            cr.line("ЧДД - ${visit.meta("objStatusP15")} в мин. Дыхание ${visit.meta("objStatusP16").dot()}")
+            cr.line("Живот ${visit.meta("objStatusP17").dot()} " +
+                    "Печень ${visit.meta("objStatusP18").dot()} " +
+                    "Поколачивание по пояснице ${visit.meta("objStatusP19").dot()} " +
+                    "Периферические отеки: ${visit.meta("objStatusP20").dot()}")
+            cr.line("Физиологические отправления ${visit.meta("objStatusP21")} (со слов).")
+            cr.paragraph {
+                createRun("На основании жалоб, анамнеза, объективных данных, данных обследования выставлен " +
+                          "${visit.meta("objStatusP22").toUpperCase()} диагноз.", true) {
+                    fontSize = 10
+                }
+            }
+        }
+
+        fun genDocDiagnosis(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("ДИАГНОЗЫ", true)
+            cr.doc.createTable(visit.diagnoses.size + 1, 3).apply {
+                getRow(0).apply {
+                    getCell(0).apply {
+                        ctTc.addNewTcPr().addNewNoWrap()
+                        ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(3000)
+                        paragraphs[0].apply {
+                            alignment = ParagraphAlignment.CENTER
+                            createRun("Тип диагноза", true)
+                        }
+                    }
+                    getCell(1).apply {
+                        ctTc.addNewTcPr().addNewNoWrap()
+                        ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(3000)
+                        paragraphs[0].apply {
+                            alignment = ParagraphAlignment.CENTER
+                            createRun("Код МКБ-10", true)
+                        }
+                    }
+                    getCell(2).apply {
+                        ctTc.addNewTcPr().addNewNoWrap()
+                        ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(12000)
+                        paragraphs[0].apply {
+                            alignment = ParagraphAlignment.CENTER
+                            createRun("Наименование", true)
+                        }
+                    }
+                }
+                visit.diagnoses.forEachIndexed { i, it ->
+                    getRow(i + 1).apply {
+                        getCell(0).apply {
+                            paragraphs[0].apply {
+                                alignment = ParagraphAlignment.CENTER
+                                createRun(it.type.value.localName)
+                            }
+                        }
+                        getCell(1).apply {
+                            paragraphs[0].apply {
+                                alignment = ParagraphAlignment.CENTER
+                                createRun(it.mkbID.value)
+                            }
+                        }
+                        getCell(2).apply {
+                            paragraphs[0].apply {
+                                alignment = ParagraphAlignment.LEFT
+                                createRun(it.info.value)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        fun genDocCurrHelp(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            val hide = visit.meta("currHelpP1").toBoolean()
+            if (hide) return
+
+            cr.line("ОКАЗАННАЯ МЕДИКОМЕНТОЗНАЯ ПОМОЩЬ В КАБИНЕТЕ ВРАЧА", true)
+            cr.lineSplited(visit.meta("currHelpP2").dot())
+        }
+
+        fun genDocSurveyPlan(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("ПЛАН ОБСЛЕДОВАНИЯ", true)
+            cr.lineSplited(visit.meta("surveyPlanP1"))
+        }
+
+        fun genDocTreatPlan(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("ПЛАН ЛЕЧЕНИЯ", true)
+            cr.lineSplited(visit.meta("treatPlanP1").dot())
+        }
+
+        fun genDocRecomms(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            cr.line("РЕКОМЕНДАЦИИ", true)
+            cr.lineSplited(visit.meta("recommsP1").dot())
+        }
+
+        fun genDocEVN(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+            val hide = visit.meta("evnP1").toBoolean()
+            if (hide) return
+
+            cr.line("ЭВН", true)
+            cr.lineSplited(visit.meta("evnP2").dot())
+            cr.line("Выдан первичный листок нетрудоспособности №${visit.meta("evnP3")} " +
+                    "с ${convertedDate(visit.meta("evnP4"))} по ${convertedDate(visit.meta("evnP5"))}г.")
+            cr.line("Явка ${convertedDate(visit.meta("evnP5"))}г.")
+        }
+
+        fun genSignature(cr: DocCreator) {
+            cr.line()
+            cr.line()
+            cr.line()
+            cr.paragraph {
+                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.user.value}", true) {
+                    alignment = CENTER
+                    fontSize = 10
+                }
+            }
+        }
     }
 }
