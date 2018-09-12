@@ -12,7 +12,7 @@ inline fun <T> tryWithIgnore(block: () -> T): T? {
     }
 }
 
-inline fun <T> tryWithError(msg: String = "Ignored exception", block: () -> T): T? {
+inline fun <T> tryWithError(msg: String = "Неожиданная ошибка", block: () -> T): T? {
     return try {
         block()
     } catch (e: Exception) {
@@ -21,7 +21,7 @@ inline fun <T> tryWithError(msg: String = "Ignored exception", block: () -> T): 
     }
 }
 
-inline fun <T> tryWithError(msg: String = "Ignored exception", def: T, block: () -> T): T {
+inline fun <T> tryWithError(msg: String = "Неожиданная ошибка", def: T, block: () -> T): T {
     return try {
         block()
     } catch (e: Exception) {
@@ -31,13 +31,17 @@ inline fun <T> tryWithError(msg: String = "Ignored exception", def: T, block: ()
 }
 
 fun File.toDir(): File {
-    FileUtils.forceMkdir(this)
+    tryWithError("Не удалось создать каталог") {
+        FileUtils.forceMkdir(this)
+    }
     return this
 }
 
 fun File.toExistsFile(): File {
     if (!exists()) {
-        createNewFile()
+        tryWithError("Не удалось создать новый файл.") {
+            createNewFile()
+        }
     }
     return this
 }
@@ -46,14 +50,18 @@ fun File.toNewFile(): File {
     if (exists()) {
         delete()
     }
-    createNewFile()
+    tryWithError("Не удалось создать новый файл.") {
+        createNewFile()
+    }
     return this
 }
 
 fun File.toExistsFileForce(): File {
     if (!exists()) {
         parentFile?.toDir()
-        createNewFile()
+        tryWithError("Не удалось создать новый файл.") {
+            createNewFile()
+        }
     }
     return this
 }
