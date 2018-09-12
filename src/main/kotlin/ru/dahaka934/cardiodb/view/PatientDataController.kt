@@ -16,11 +16,16 @@ import ru.dahaka934.cardiodb.data.Visit
 import ru.dahaka934.cardiodb.data.Visit.Type
 import ru.dahaka934.cardiodb.data.Visit.Type.*
 import ru.dahaka934.cardiodb.util.LocalDateConverter
+import ru.dahaka934.cardiodb.util.toDir
+import ru.dahaka934.cardiodb.util.toExistsFile
+import ru.dahaka934.cardiodb.util.tryWithError
 import ru.dahaka934.cardiodb.view.MainController.ControllerTab
 import ru.dahaka934.cardiodb.view.internal.FXHelper
 import ru.dahaka934.cardiodb.view.internal.TableDateCell
 import ru.dahaka934.cardiodb.view.internal.TableIndexCell
 import ru.dahaka934.cardiodb.view.internal.select
+import java.awt.Desktop
+import java.io.File
 import java.time.LocalDate
 
 class PatientDataController : ControllerTab<Pane>() {
@@ -192,11 +197,41 @@ class PatientDataController : ControllerTab<Pane>() {
     }
 
     @FXML fun onGenDocReception(e: ActionEvent) {
-
+        val visit = table.selectionModel.selectedItem ?: return
+        val fileName = patient.name.value +
+                       "-${LocalDateConverter.toString(patient.birthday.value)}" +
+                       "-прием-${visit.type.value.localName.toLowerCase()}" +
+                       "-${LocalDateConverter.toString(visit.date.value)}.docx"
+        val file = File(File("data/docs").toDir(), fileName).toExistsFile()
+        val res = when (visit.type.value) {
+            PRIMARY -> PrimaryVisitController.generateDocReception(file, patient, patientData, visit)
+            else    -> SecondaryVisitController.generateDocReception(file, patient, patientData, visit)
+        }
+        if (res) {
+            openDoc(file)
+        }
     }
 
     @FXML fun onGenDocConclusion(e: ActionEvent) {
+        val visit = table.selectionModel.selectedItem ?: return
+        val fileName = patient.name.value +
+                       "-${LocalDateConverter.toString(patient.birthday.value)}" +
+                       "-заключение-${visit.type.value.localName.toLowerCase()}" +
+                       "-${LocalDateConverter.toString(visit.date.value)}.docx"
+        val file = File(File("data/docs").toDir(), fileName).toExistsFile()
+        val res = when (visit.type.value) {
+            PRIMARY -> PrimaryVisitController.generateDocConclusion(file, patient, patientData, visit)
+            else    -> SecondaryVisitController.generateDocConclusion(file, patient, patientData, visit)
+        }
+        if (res) {
+            openDoc(file)
+        }
+    }
 
+    private fun openDoc(file: File) {
+        tryWithError("Не удалось открыть документ '$file'") {
+            Desktop.getDesktop().open(file)
+        }
     }
 
     override fun onClose() {
