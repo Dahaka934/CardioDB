@@ -105,6 +105,14 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
         }
         buttonOpenFiltering.disableProperty().bind(filterPanel.visibleProperty())
 
+        buttonNew.graphic = FXHelper.imageView("add24")
+        buttonModify.graphic = FXHelper.imageView("modify24")
+        buttonDelete.graphic = FXHelper.imageView("delete24")
+        buttonOpen.graphic = FXHelper.imageView("open24")
+        buttonOpenFiltering.graphic = FXHelper.imageView("search24")
+        buttonFilterAccept.graphic = FXHelper.imageView("search24")
+        buttonFilterCancel.graphic = FXHelper.imageView("cancel24")
+
         FXHelper.bindClickOnPressEnter(buttonNew)
         FXHelper.bindClickOnPressEnter(buttonModify)
         FXHelper.bindClickOnPressEnter(buttonDelete)

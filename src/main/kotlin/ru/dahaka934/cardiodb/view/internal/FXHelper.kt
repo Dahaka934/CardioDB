@@ -6,9 +6,11 @@ import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType.*
 import javafx.scene.control.ButtonBar.ButtonData.*
+import javafx.scene.image.ImageView
 import javafx.scene.input.KeyCode.*
 import javafx.scene.input.KeyEvent
 import javafx.scene.layout.VBox
+import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Diagnose
 import ru.dahaka934.cardiodb.data.Patient.Sex
 import ru.dahaka934.cardiodb.data.Visit.Type
@@ -66,6 +68,14 @@ object FXHelper {
             if (it.code == ENTER) {
                 button.fire()
             }
+        }
+    }
+
+    fun imageView(name: String, scale: Double = 1.0): ImageView {
+        return ImageView().apply {
+            image = CardioDB.getIcon(name)
+            fitWidth = image.width * scale
+            fitHeight = image.height * scale
         }
     }
 }

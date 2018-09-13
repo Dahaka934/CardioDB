@@ -102,7 +102,13 @@ class PatientDataController : ControllerTab<Pane>() {
         buttonDelete.disableProperty().bind(selectionBinding)
         buttonDoc.disableProperty().bind(selectionBinding)
 
-        FXHelper.bindClickOnPressEnter(buttonOpen)
+        buttonNew.graphic = FXHelper.imageView("add24")
+        buttonOpen.graphic = FXHelper.imageView("open24")
+        buttonCopy.graphic = FXHelper.imageView("copy24")
+        buttonDoc.graphic = FXHelper.imageView("word24")
+        buttonDelete.graphic = FXHelper.imageView("delete24")
+
+        FXHelper.bindClickOnPressEnter(buttonDelete)
         FXHelper.bindClickOnPressEnter(buttonDelete)
     }
 

@@ -77,6 +77,9 @@ class EditPatientController : Controller<Pane>() {
 
         Platform.runLater { fieldName.requestFocus() }
 
+        buttonSave.graphic = FXHelper.imageView("ok24")
+        buttonCancel.graphic = FXHelper.imageView("cancel24")
+
         FXHelper.bindTabOnPressEnter(fieldName)
         FXHelper.bindTabOnPressEnter(fieldBirthday)
         FXHelper.bindTabOnPressEnter(fieldAddress)

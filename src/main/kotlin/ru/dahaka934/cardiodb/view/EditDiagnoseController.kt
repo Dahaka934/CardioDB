@@ -104,6 +104,9 @@ class EditDiagnoseController : Controller<Pane>() {
         FXHelper.bindTabOnPressEnter(fieldCode)
         FXHelper.bindTabOnPressEnter(fieldInfo)
 
+        buttonSave.graphic = FXHelper.imageView("ok24")
+        buttonCancel.graphic = FXHelper.imageView("cancel24")
+
         FXHelper.bindClickOnPressEnter(buttonSave)
         FXHelper.bindClickOnPressEnter(buttonCancel)
     }

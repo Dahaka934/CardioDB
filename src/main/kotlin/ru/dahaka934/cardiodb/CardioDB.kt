@@ -1,5 +1,6 @@
 package ru.dahaka934.cardiodb
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap
 import javafx.application.Application
 import javafx.beans.property.SimpleStringProperty
 import javafx.fxml.FXMLLoader
@@ -24,7 +25,7 @@ class CardioDB : Application() {
         private lateinit var loader: FXMLLoader
         private val fxClassLoader = FXClassLoader(FXMLLoader.getDefaultClassLoader())
 
-        val icon = Image(CardioDB::class.java.getResourceAsStream("/assets/CardioDB.png"))
+        private val icons = Object2ObjectOpenHashMap<String, Image>()
 
         val registry = PatientRegistry()
         val executor = Executors.newSingleThreadExecutor()
@@ -46,14 +47,20 @@ class CardioDB : Application() {
         inline fun <C> createWindow(path: String, stage: Stage = Stage(), block: Stage.(C) -> Unit): Stage {
             return stage.apply {
                 val node = loadNode<Parent>(path)
-                icons.add(icon)
+                icons.add(getIcon("main32"))
                 scene = Scene(node)
                 val controller = getLoadedController<C>()
-                block(stage, controller!!)
+                block(stage, controller)
                 if (controller is Controller<*>) {
                     (controller as Controller<Node>).init(stage, node)
                     controller.init()
                 }
+            }
+        }
+
+        fun getIcon(name: String): Image {
+            return icons.getOrPut(name) {
+                Image(CardioDB::class.java.getResourceAsStream("/assets/icons/$name.png"))
             }
         }
     }

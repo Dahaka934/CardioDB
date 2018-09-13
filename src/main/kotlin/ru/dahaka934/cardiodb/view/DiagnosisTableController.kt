@@ -84,6 +84,10 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
         buttonDelete.disableProperty().bind(selectionBinding)
         buttonModify.disableProperty().bind(selectionBinding)
 
+        buttonNew.graphic = FXHelper.imageView("add24")
+        buttonModify.graphic = FXHelper.imageView("modify24")
+        buttonDelete.graphic = FXHelper.imageView("delete24")
+
         FXHelper.bindClickOnPressEnter(buttonNew)
         FXHelper.bindClickOnPressEnter(buttonModify)
         FXHelper.bindClickOnPressEnter(buttonDelete)
