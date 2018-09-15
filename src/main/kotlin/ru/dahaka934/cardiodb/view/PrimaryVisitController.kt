@@ -76,7 +76,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
 
     companion object {
         fun genDocDisease(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("АНАМНЕЗ ЗАБОЛЕВАНИЯ", true)
+            cr.line("АНАМНЕЗ ЗАБОЛЕВАНИЯ", 10, true)
             cr.lineSplited(visit.meta("anamDiseaseP1").dot())
             cr.line("АД максимальное - ${visit.meta("anamDiseaseP2")}мм.рт.ст.  " +
                     "АД рабочее - ${visit.meta("anamDiseaseP3")}мм.рт.ст.")
@@ -84,7 +84,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
         }
 
         fun genDocAnamLife(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("АНАМНЕЗ ЖИЗНИ", true)
+            cr.line("АНАМНЕЗ ЖИЗНИ", 10, true)
             cr.line("Перенесенные заболевания, травмы, операции: ${visit.meta("anamLifeP1").dot()}")
             cr.line("Гепатит: ${visit.meta("anamLifeP2").dot()} " +
                     "B24: ${visit.meta("anamLifeP3").dot()} " +
@@ -100,21 +100,21 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
         }
 
         fun genDocBHabits(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ПАГУБНЫЕ ПРИВЫЧКИ", true)
+            cr.line("ПАГУБНЫЕ ПРИВЫЧКИ", 10, true)
             cr.line("Курение: ${visit.meta("bhabitsP1").dot()}")
             cr.line("Злоупотребление алкоголем: ${visit.meta("bhabitsP2").dot()}")
             cr.line("Прием ПАВ: ${visit.meta("bhabitsP3").dot()}")
         }
 
         fun genDocAllergies(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("АЛЛЕРГОЛОГИЧЕСКИЙ АНАМНЕЗ", true)
+            cr.line("АЛЛЕРГОЛОГИЧЕСКИЙ АНАМНЕЗ", 10, true)
             cr.line("Лекарственные: ${visit.meta("allergiesP1").dot()}")
             cr.line("Пищевые: ${visit.meta("allergiesP2").dot()}")
             cr.line("Прочие: ${visit.meta("allergiesP3").dot()}")
         }
 
         fun genDocAnamInsurance(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("СТРАХОВОЙ АНАМНЕЗ", true)
+            cr.line("СТРАХОВОЙ АНАМНЕЗ", 10, true)
             cr.lineSplited(visit.meta("anamInsuranceP1").dot())
         }
 
@@ -122,7 +122,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             val creator = DocCreator()
             creator.paragraph {
                 style = "Top"
-                createRun("ПЕРВИЧНЫЙ ПРИЕМ", true)
+                createRun("ПЕРВИЧНЫЙ ПРИЕМ", 10, true)
             }
 
             genDocHeader(creator, patient, data, visit)
@@ -148,7 +148,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             val creator = DocCreator()
             creator.paragraph {
                 style = "Top"
-                createRun("ПЕРВИЧНЫЙ ПРИЕМ", true)
+                createRun("ПЕРВИЧНЫЙ ПРИЕМ", 10, true)
             }
 
             genDocHeader(creator, patient, data, visit)

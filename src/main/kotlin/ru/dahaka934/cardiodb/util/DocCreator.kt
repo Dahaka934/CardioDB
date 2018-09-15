@@ -20,15 +20,15 @@ class DocCreator {
         }
     }
 
-    fun line(text: String = "", bold: Boolean = false) {
+    fun line(text: String = "", size: Int = 0, bold: Boolean = false) {
         doc.createParagraph {
-            createRun(text, bold)
+            createRun(text, size, bold)
         }
     }
 
-    fun lineSplited(text: String = "", bold: Boolean = false) {
+    fun lineSplited(text: String = "", size: Int = 0, bold: Boolean = false) {
         text.split("\n").forEach {
-            line(it, bold)
+            line(it, size, bold)
         }
     }
 
@@ -46,10 +46,15 @@ inline fun XWPFDocument.createParagraph(block: XWPFParagraph.() -> Unit) {
     createParagraph().apply(block)
 }
 
-inline fun XWPFParagraph.createRun(text: String, bold: Boolean = false, block: XWPFRun.() -> Unit = {}) {
+inline fun XWPFParagraph.createRun(text: String, size: Int = 0, bold: Boolean = false, block: XWPFRun.() -> Unit = {}) {
     createRun().apply {
         setText(text)
-        isBold = bold
+        if (size > 0) {
+            fontSize = size
+        }
+        if (bold) {
+            isBold = bold
+        }
         block()
     }
 }

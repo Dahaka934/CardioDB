@@ -14,7 +14,7 @@ class SecondaryVisitController : BaseVisitController<ScrollPane>() {
             val creator = DocCreator()
             creator.paragraph {
                 style = "Top"
-                createRun("ПОВТОРНЫЙ ПРИЕМ", true)
+                createRun("ПОВТОРНЫЙ ПРИЕМ", bold = true)
             }
 
             genDocHeader(creator, patient, data, visit)
@@ -35,7 +35,7 @@ class SecondaryVisitController : BaseVisitController<ScrollPane>() {
             val creator = DocCreator()
             creator.paragraph {
                 style = "Top"
-                createRun("ПОВТОРНЫЙ ПРИЕМ", true)
+                createRun("ПОВТОРНЫЙ ПРИЕМ", bold = true)
             }
 
             genDocHeader(creator, patient, data, visit)

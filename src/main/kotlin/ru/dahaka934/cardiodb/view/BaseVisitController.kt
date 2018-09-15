@@ -199,7 +199,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(currHelpP2)
 
         bind(surveyPlanP1, """
-            Общий анализ крови. Общий анализ мочи. Анализ крови на АСТ, АЛТ, Белирубин, Холестерин (Липиды), Креатинин. Коагулограмма №1. Анализ крови на гормоны ТТГ, Т4своб. Анализ крови на электролиты К, Са, Mg, Na, Cl.
+            Общий анализ крови. Общий анализ мочи. Анализ крови на АСТ, АЛТ, Билирубин, Холестерин (Липиды), Креатинин. Коагулограмма №1. Анализ крови на гормоны ТТГ, Т4своб. Анализ крови на электролиты К, Са, Mg, Na, Cl.
             ФЛГ, ЭКГ, ЭХОКГ, Суточный монитор ЭКГ (Экг+АД).
             Консультация.
         """.trimIndent())
@@ -252,8 +252,14 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         }
 
         fun genDocHeader(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ФИО пациента:  ${patient.name.value.dot()}                                " +
-                    "Дата рождения:  ${LocalDateConverter.toString(patient.birthday.value).dot()}")
+            cr.paragraph {
+                createRun("ФИО пациента:  ")
+                createRun(patient.name.value.dot(), bold = true) {
+                    fontSize = 14
+                }
+                createRun("                 " +
+                          "Дата рождения:  ${LocalDateConverter.toString(patient.birthday.value).dot()}")
+            }
 
             cr.line()
             cr.line("Дата консльтации:  ${LocalDateConverter.toString(patient.lastVisit.value).dot()}")
@@ -261,12 +267,12 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         }
 
         fun genDocComplaints(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ЖАЛОБЫ", true)
+            cr.line("ЖАЛОБЫ", 10, true)
             cr.lineSplited(visit.meta("complaintsP1").dot())
         }
 
         fun genDocObjStatus(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ОБЪЕКТИВНЫЙ СТАТУС", true)
+            cr.line("ОБЪЕКТИВНЫЙ СТАТУС", 10, true)
             cr.line("Общее состояние: ${visit.meta("objStatusP1").dot()} " +
                     "Температура: ${visit.meta("objStatusP2")}C.")
             cr.line("Рост: ${visit.meta("objStatusP3")}см. " +
@@ -288,14 +294,14 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             cr.line("Физиологические отправления ${visit.meta("objStatusP21")} (со слов).")
             cr.paragraph {
                 createRun("На основании жалоб, анамнеза, объективных данных, данных обследования выставлен " +
-                          "${visit.meta("objStatusP22").toUpperCase()} диагноз.", true) {
+                          "${visit.meta("objStatusP22").toUpperCase()} диагноз.", bold = true) {
                     fontSize = 10
                 }
             }
         }
 
         fun genDocDiagnosis(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ДИАГНОЗЫ", true)
+            cr.line("ДИАГНОЗЫ", 10, true)
             cr.doc.createTable(visit.diagnoses.size + 1, 3).apply {
                 getRow(0).apply {
                     getCell(0).apply {
@@ -303,7 +309,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                         ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(3000)
                         paragraphs[0].apply {
                             alignment = ParagraphAlignment.CENTER
-                            createRun("Тип диагноза", true)
+                            createRun("Тип диагноза", bold = true)
                         }
                     }
                     getCell(1).apply {
@@ -311,7 +317,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                         ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(3000)
                         paragraphs[0].apply {
                             alignment = ParagraphAlignment.CENTER
-                            createRun("Код МКБ-10", true)
+                            createRun("Код МКБ-10", bold = true)
                         }
                     }
                     getCell(2).apply {
@@ -319,7 +325,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                         ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(12000)
                         paragraphs[0].apply {
                             alignment = ParagraphAlignment.CENTER
-                            createRun("Наименование", true)
+                            createRun("Наименование", bold = true)
                         }
                     }
                 }
@@ -352,22 +358,22 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             val hide = visit.meta("currHelpP1").toBoolean()
             if (hide) return
 
-            cr.line("ОКАЗАННАЯ МЕДИКОМЕНТОЗНАЯ ПОМОЩЬ В КАБИНЕТЕ ВРАЧА", true)
+            cr.line("ОКАЗАННАЯ МЕДИКОМЕНТОЗНАЯ ПОМОЩЬ В КАБИНЕТЕ ВРАЧА", 10, true)
             cr.lineSplited(visit.meta("currHelpP2").dot())
         }
 
         fun genDocSurveyPlan(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ПЛАН ОБСЛЕДОВАНИЯ", true)
+            cr.line("ПЛАН ОБСЛЕДОВАНИЯ", 10, true)
             cr.lineSplited(visit.meta("surveyPlanP1"))
         }
 
         fun genDocTreatPlan(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ПЛАН ЛЕЧЕНИЯ", true)
+            cr.line("ПЛАН ЛЕЧЕНИЯ", 10, true)
             cr.lineSplited(visit.meta("treatPlanP1").dot())
         }
 
         fun genDocRecomms(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("РЕКОМЕНДАЦИИ", true)
+            cr.line("РЕКОМЕНДАЦИИ", 10, true)
             cr.lineSplited(visit.meta("recommsP1").dot())
         }
 
@@ -375,7 +381,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             val hide = visit.meta("evnP1").toBoolean()
             if (hide) return
 
-            cr.line("ЭВН", true)
+            cr.line("ЭВН", 10, true)
             cr.lineSplited(visit.meta("evnP2").dot())
             cr.line("Выдан первичный листок нетрудоспособности №${visit.meta("evnP3")} " +
                     "с ${convertedDate(visit.meta("evnP4"))} по ${convertedDate(visit.meta("evnP5"))}г.")
@@ -387,7 +393,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             cr.line()
             cr.line()
             cr.paragraph {
-                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.user.value}", true) {
+                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.user.value}", bold = true) {
                     alignment = CENTER
                     fontSize = 10
                 }
