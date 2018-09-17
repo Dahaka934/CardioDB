@@ -176,14 +176,14 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(objStatusP7)
         bind(objStatusP8)
         bind(objStatusP9, "ЧСС=PS", "ЧЖС≠PS")
-        bind(objStatusP10, "00")
+        bind(objStatusP10, "уд/мин.")
         bind(objStatusP11, objStatusP11c, true, false, "ритмичный", "аритмичный", "дефицита пульса нет",
              "удовлетворительное наполнение", "напряжение")
         bind(objStatusP12, objStatusP12c, true, false, "ясные", "звучные", "приглушены", "глухие", "ритмичные")
         bind(objStatusP13)
         bind(objStatusP14, objStatusP14c, true, false, "не выслушиваются", "систолический выслушивается",
              "диастолический выслушивается")
-        bind(objStatusP15, "00")
+        bind(objStatusP15, "в мин.")
         bind(objStatusP16, objStatusP16c, true, false, "везикулярное", "жесткое", "жестковатое",
              "ослабленное", "сухие хрипы", "влажные хрипы", "хрипов нет")
         bind(objStatusP17, objStatusP17c, true, false, "мягкий", "напряжен", "безболезненный", "болезненный")

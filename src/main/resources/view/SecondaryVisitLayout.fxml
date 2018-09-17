@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -101,7 +102,7 @@
                                             </center>
                                         </BorderPane>
                                         <Label text="Пульс:" GridPane.rowIndex="9" />
-                                        <TextField fx:id="objStatusP10" promptText="NN уд/мин." text="NN уд/мин." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                        <TextField fx:id="objStatusP10" promptText="NN уд/мин." text="уд/мин." GridPane.columnIndex="1" GridPane.rowIndex="8" />
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                             <right>
                                                 <ComboBox fx:id="objStatusP12c" prefHeight="25.0" prefWidth="24.0" BorderPane.alignment="CENTER" />
@@ -121,7 +122,7 @@
                                                 <TextField fx:id="objStatusP14" prefHeight="25.0" prefWidth="563.0" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <TextField fx:id="objStatusP15" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                        <TextField fx:id="objStatusP15" promptText="NN в мин." text="в мин." GridPane.columnIndex="1" GridPane.rowIndex="13" />
                                         <Label text="Дыхание:" GridPane.rowIndex="14" />
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="14">
                                             <right>
@@ -147,7 +148,7 @@
                                                 <TextField fx:id="objStatusP18" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <Label text="Поколачивание по спине:" GridPane.rowIndex="17" />
+                                        <Label text="Поколачивание по пояснице:" GridPane.rowIndex="17" />
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="17">
                                             <right>
                                                 <ComboBox fx:id="objStatusP19c" prefHeight="25.0" prefWidth="4.0" BorderPane.alignment="CENTER" />

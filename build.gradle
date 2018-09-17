@@ -7,7 +7,6 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-
     }
 }
 
@@ -139,4 +138,10 @@ jfx {
     certOrg = null // required
     certState = null // required
     certCountry = null // required
+}
+
+task archive(type: Zip) {
+    from "$buildDir/jfx/native/${rootProject.name}"
+    archiveName = "${rootProject.name}.zip"
+    destinationDir = new File("$buildDir/archives")
 }
