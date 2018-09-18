@@ -24,12 +24,36 @@ object AppProperties : Properties() {
         }
     }
 
-    fun getPropertyOrPut(key: String, def: String): String {
+    fun getStringOrPut(key: String, def: String): String {
         var ret: String? = getProperty(key)
         if (ret == null) {
             ret = def
             setProperty(key, def)
         }
         return ret
+    }
+
+    fun getIntOrPut(key: String, def: Int): Int {
+        return getStringOrPut(key, def.toString()).toIntOrNull() ?: def
+    }
+
+    fun getLongOrPut(key: String, def: Long): Long {
+        return getStringOrPut(key, def.toString()).toLongOrNull() ?: def
+    }
+
+    fun getUIntOrPut(key: String, def: Int): Int {
+        val ret = getIntOrPut(key, def)
+        return if (ret < 0) {
+            setProperty(key, def.toString())
+            def
+        } else ret
+    }
+
+    fun getULongOrPut(key: String, def: Long): Long {
+        val ret = getLongOrPut(key, def)
+        return if (ret < 0) {
+            setProperty(key, def.toString())
+            def
+        } else ret
     }
 }

@@ -22,28 +22,42 @@ object Backuper {
         val def = "[\\S\\s]*.docx"
         AppProperties.setProperty("backupRegexExample", def)
         backupRegex = tryWithError("Invalid backup regex. Set to default.") {
-            AppProperties.getPropertyOrPut("backupRegex", def).toPattern().toRegex()
+            AppProperties.getStringOrPut("backupRegex", def).toPattern().toRegex()
         } ?: run {
             def.toPattern().toRegex()
         }
     }
 
     fun makeBackupAuto() {
-        var lastBackup = AppProperties.getProperty("lastBackup", "0").toLongOrNull() ?: 0L
+        var lastBackup = AppProperties.getULongOrPut("backupLast", 0L)
         if (!fileBackups.exists()) {
             lastBackup = 0L
         }
-        val backupFreqInHours = AppProperties.getPropertyOrPut("backupFreqInHours", "24").toLongOrNull() ?: 24L
-        val backupFreq = backupFreqInHours * 60 * 60 * 1000
+        val backupFreqInHours = AppProperties.getUIntOrPut("backupFreqInHours", 24)
+        val backupFreq = backupFreqInHours * 60L * 60L * 1000L
         val currTime = Date().time
         if (lastBackup + backupFreq <= currTime) {
             makeBackup()
-            AppProperties.setProperty("lastBackup", currTime.toString())
+            AppProperties.setProperty("backupLast", currTime.toString())
             CardioDB.log("Backup data")
         }
     }
 
+    fun checkBackupsCount() {
+        val backupCount = AppProperties.getIntOrPut("backupCount", 20)
+        if (backupCount <= 0) {
+            return
+        }
+
+        val files = fileBackups.toDir().listFiles()
+        Arrays.sort(files) { f1, f2 -> java.lang.Long.compare(f1.lastModified(), f2.lastModified()) }
+        for (i in 0 until files.size - backupCount - 1) {
+            files[i].delete()
+        }
+    }
+
     fun makeBackup() {
+        checkBackupsCount()
         var file = File(fileBackups.toDir(), "${LocalDateConverter.toString(LocalDate.now())}.zip")
         file = IOTools.findUniqueFile(file)
         tryWithError("Ошибка при создании бэкапа") {
