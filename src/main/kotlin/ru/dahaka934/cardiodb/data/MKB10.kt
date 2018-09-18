@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.xssf.usermodel.XSSFRow
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.util.IOTools
 import ru.dahaka934.cardiodb.util.SimpleLinkedTree
 import java.util.concurrent.CompletableFuture
@@ -72,6 +73,7 @@ object MKB10 {
             }
         }.thenApply {
             isLoaded = true
+            CardioDB.log("Reload MKB-10 data")
         }
     }
 

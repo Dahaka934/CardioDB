@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener.Change
 import ru.dahaka934.cardiodb.CardioDB
-import ru.dahaka934.cardiodb.data.Patient.Data
 import ru.dahaka934.cardiodb.util.*
 import java.io.File
 import java.util.concurrent.CompletableFuture
@@ -60,6 +59,8 @@ class PatientRegistry {
             patients.clear()
             patients.addAll(patientMap.values.toList())
             isDirty.value = false
+
+            CardioDB.log("Reload patients data")
         }
     }
 
@@ -67,52 +68,38 @@ class PatientRegistry {
         return dataMap.getOrPut(patient) {
             GsonHelper.readObjOrRewrite(File(dirMapping, "${reqId(patient)}.json"), Patient::Data).also {
                 manageObject(it, patient)
+
+                CardioDB.log("Read '${patient.name.value}' data")
             }
         }
     }
 
-    fun savePatientsAsync(): CompletableFuture<Void> {
+    fun savePatientsAsync(): CompletableFuture<Unit> {
         val str = GsonHelper.writeObj(patientMap)
+        CardioDB.log("Saving patients data")
         return if (str != null) {
-            CompletableFuture.runAsync {
+            CardioDB.executor.completable {
                 IOTools.writeString(fileHeader, str, false)
             }
         } else {
-            CompletableFuture.completedFuture(null as Void?)
+            CompletableFuture.completedFuture(Unit)
         }
     }
 
-    fun saveDataAsync(patient: Patient): CompletableFuture<Void> {
+    fun saveDataAsync(patient: Patient): CompletableFuture<Unit> {
         val data = dataMap[patient]
         return if (data != null) {
             val str = GsonHelper.writeObj(data)
             return if (str != null) {
-                CompletableFuture.runAsync {
+                CardioDB.executor.completable {
                     IOTools.writeString(File(dirMapping, "${reqId(patient)}.json"), str, false)
+                    CardioDB.log("Saving '${patient.name.value}' data")
                 }
             } else {
-                CompletableFuture.completedFuture(null as Void?)
+                CompletableFuture.completedFuture(Unit)
             }
         } else {
             CompletableFuture.completedFuture(data)
-        }
-    }
-
-    fun cleanInvalidData() {
-        IOTools.forEachFile(dirMapping, true) {
-            val ext = it.name.substringAfterLast('.', "miss")
-            if (ext != "json" && ext != "miss") {
-                CompletableFuture.runAsync {
-                    it.delete()
-                }
-            }
-            val name = it.name.substringBefore(".$ext", "miss")
-            val id = name.toIntOrNull()
-            if (id == null || !patientMap.containsKey(id)) {
-                CompletableFuture.runAsync {
-                    it.delete()
-                }
-            }
         }
     }
 
@@ -139,15 +126,22 @@ class PatientRegistry {
         }
     }
 
-    fun saveOnExitAsync() {
+    fun saveAllAsync() {
         if (isDirty.value) {
-            if (saveRequests.isNotEmpty()) {
-                savePatientsAsync()
-            }
+            val list = ArrayList<CompletableFuture<Unit>>()
+
+            list += savePatientsAsync()
+
             saveRequests.forEach {
-                saveDataAsync(it)
+                list += saveDataAsync(it)
             }
             saveRequests.clear()
+
+            CompletableFuture.runAsync {
+                list.forEach { it.join() }
+                Backuper.makeBackupAuto()
+            }
+
             isDirty.value = false
         }
     }

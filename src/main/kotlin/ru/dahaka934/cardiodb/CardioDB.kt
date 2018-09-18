@@ -63,6 +63,10 @@ class CardioDB : Application() {
                 Image(CardioDB::class.java.getResourceAsStream("/assets/icons/$name.png"))
             }
         }
+
+        fun log(str: String) {
+            println(str) // TODO: Maybe log?
+        }
     }
 
     init {
@@ -79,7 +83,7 @@ class CardioDB : Application() {
     }
 
     override fun stop() {
-        registry.saveOnExitAsync()
+        registry.saveAllAsync()
         executor.shutdown()
         AppProperties.setProperty("user", user.value ?: "")
         AppProperties.save()

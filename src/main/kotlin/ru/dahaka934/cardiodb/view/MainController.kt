@@ -51,7 +51,7 @@ class MainController : Controller<BorderPane>() {
 
         buttonSaveAll.disableProperty().bind(Bindings.`when`(CardioDB.registry.isDirty).then(false).otherwise(true))
         buttonSaveAll.setOnAction {
-            CardioDB.registry.saveOnExitAsync()
+            CardioDB.registry.saveAllAsync()
         }
 
         buttonCloseTab.disableProperty().bind(Bindings.equal(0, tabPane.selectionModel.selectedIndexProperty()))

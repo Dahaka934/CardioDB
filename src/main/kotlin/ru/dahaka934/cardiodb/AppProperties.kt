@@ -23,4 +23,13 @@ object AppProperties : Properties() {
             }
         }
     }
+
+    fun getPropertyOrPut(key: String, def: String): String {
+        var ret: String? = getProperty(key)
+        if (ret == null) {
+            ret = def
+            setProperty(key, def)
+        }
+        return ret
+    }
 }

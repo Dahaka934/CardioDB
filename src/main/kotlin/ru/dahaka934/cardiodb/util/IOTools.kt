@@ -28,8 +28,8 @@ object IOTools {
             val name = path.substringBeforeLast(".$ext", file.name)
             var copy: File = file
             for (i in 0 until Int.MAX_VALUE) {
-                val index = if (i == 0) "" else "$i"
-                copy = File("$name-$index.$ext")
+                val index = if (i == 0) "" else "-$i"
+                copy = File("$name$index.$ext")
                 if (!copy.exists()) {
                     break
                 }

@@ -8,4 +8,5 @@ build
 
 #CardioBD
 /data
+/backups
 /config.properties
