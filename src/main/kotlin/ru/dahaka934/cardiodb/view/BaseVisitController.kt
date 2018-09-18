@@ -268,7 +268,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
 
         fun genDocComplaints(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("ЖАЛОБЫ", 9, true)
-            cr.lineSplited(visit.meta("complaintsP1").dot())
+            cr.lineSplit(visit.meta("complaintsP1").dot())
         }
 
         fun genDocObjStatus(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
@@ -359,22 +359,22 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             if (hide) return
 
             cr.line("ОКАЗАННАЯ МЕДИКОМЕНТОЗНАЯ ПОМОЩЬ В КАБИНЕТЕ ВРАЧА", 9, true)
-            cr.lineSplited(visit.meta("currHelpP2").dot())
+            cr.lineSplit(visit.meta("currHelpP2").dot())
         }
 
         fun genDocSurveyPlan(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("ПЛАН ОБСЛЕДОВАНИЯ", 9, true)
-            cr.lineSplited(visit.meta("surveyPlanP1"))
+            cr.lineSplit(visit.meta("surveyPlanP1"))
         }
 
         fun genDocTreatPlan(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("ПЛАН ЛЕЧЕНИЯ", 9, true)
-            cr.lineSplited(visit.meta("treatPlanP1").dot())
+            cr.lineSplit(visit.meta("treatPlanP1").dot())
         }
 
         fun genDocRecomms(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("РЕКОМЕНДАЦИИ", 9, true)
-            cr.lineSplited(visit.meta("recommsP1").dot())
+            cr.lineSplit(visit.meta("recommsP1").dot())
         }
 
         fun genDocEVN(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
@@ -382,7 +382,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             if (hide) return
 
             cr.line("ЭВН", 9, true)
-            cr.lineSplited(visit.meta("evnP2").dot())
+            cr.lineSplit(visit.meta("evnP2").dot())
             cr.line("Выдан первичный листок нетрудоспособности №${visit.meta("evnP3")} " +
                     "с ${convertedDate(visit.meta("evnP4"))} по ${convertedDate(visit.meta("evnP5"))}г.")
             cr.line("Явка ${convertedDate(visit.meta("evnP5"))}г.")

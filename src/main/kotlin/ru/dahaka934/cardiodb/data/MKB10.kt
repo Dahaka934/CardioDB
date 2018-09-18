@@ -24,57 +24,62 @@ object MKB10 {
     fun reloadAsync(): CompletableFuture<Unit> {
         isLoaded = false
         return CompletableFuture.runAsync {
-            IOTools.resourceStream("/assets/mkb10.xlsx")?.buffered().use {
-                val rows = XSSFWorkbook(it).getSheetAt(0).rowIterator()
+            val entryMap = parseFile()
 
-                repeat(4) {
-                    if (rows.hasNext()) {
-                        rows.next()
-                    }
-                }
-
-                val entryMap = Object2ObjectLinkedOpenHashMap<String, Entry>()
-                while (rows.hasNext()) {
-                    val row = rows.next() as XSSFRow
-                    val cells = row.cellIterator()
-                    val id = cells.nextString()
-                    val info = cells.nextString()
-                    var parent = cells.nextString()
-                    if (parent.equals("null", ignoreCase = true)) {
-                        parent = null
-                    }
-
-                    if (id != null && info != null) {
-                        entryMap[id] = Entry(id, info, parent)
-                    }
-                }
-
-                entryMap.values.forEach {
-                    tree.addEntry(it)
-                }
-
-                var lastId: String? = null
-                var lastEntry: Entry? = null
-                entryMap.values.toList().forEach {
-                    val parentId = it.parent
-                    if (parentId != null) {
-                        if (parentId != lastId) {
-                            lastId = parentId
-                            lastEntry = entryMap[parentId]
-                        }
-
-                        val parent = lastEntry
-                        if (parent != null) {
-                            tree.addLink(parent, it)
-                        }
-                    }
-                }
-                tree.genBranches()
+            entryMap.values.forEach {
+                tree.addEntry(it)
             }
+
+            var lastId: String? = null
+            var lastEntry: Entry? = null
+            entryMap.values.toList().forEach {
+                val parentId = it.parent
+                if (parentId != null) {
+                    if (parentId != lastId) {
+                        lastId = parentId
+                        lastEntry = entryMap[parentId]
+                    }
+
+                    val parent = lastEntry
+                    if (parent != null) {
+                        tree.addLink(parent, it)
+                    }
+                }
+            }
+            tree.genBranches()
         }.thenApply {
             isLoaded = true
             CardioDB.log("Reload MKB-10 data")
         }
+    }
+
+    private fun parseFile(): Object2ObjectLinkedOpenHashMap<String, Entry> {
+        val entryMap = Object2ObjectLinkedOpenHashMap<String, Entry>()
+        IOTools.resourceStream("/assets/mkb10.xlsx")?.buffered().use {
+            val rows = XSSFWorkbook(it).getSheetAt(0).rowIterator()
+
+            repeat(4) {
+                if (rows.hasNext()) {
+                    rows.next()
+                }
+            }
+
+            while (rows.hasNext()) {
+                val row = rows.next() as XSSFRow
+                val cells = row.cellIterator()
+                val id = cells.nextString()
+                val info = cells.nextString()
+                var parent = cells.nextString()
+                if (parent.equals("null", ignoreCase = true)) {
+                    parent = null
+                }
+
+                if (id != null && info != null) {
+                    entryMap[id] = Entry(id, info, parent)
+                }
+            }
+        }
+        return entryMap
     }
 
     private fun Iterator<Cell>.nextString(): String? {

@@ -77,10 +77,10 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
     companion object {
         fun genDocDisease(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("АНАМНЕЗ ЗАБОЛЕВАНИЯ", 9, true)
-            cr.lineSplited(visit.meta("anamDiseaseP1").dot())
+            cr.lineSplit(visit.meta("anamDiseaseP1").dot())
             cr.line("АД максимальное - ${visit.meta("anamDiseaseP2")}мм.рт.ст.  " +
                     "АД рабочее - ${visit.meta("anamDiseaseP3")}мм.рт.ст.")
-            cr.lineSplited("Постоянно принимает: ${visit.meta("anamDiseaseP4").dot()}")
+            cr.lineSplit("Постоянно принимает: ${visit.meta("anamDiseaseP4").dot()}")
         }
 
         fun genDocAnamLife(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
@@ -115,7 +115,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
 
         fun genDocAnamInsurance(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
             cr.line("СТРАХОВОЙ АНАМНЕЗ", 9, true)
-            cr.lineSplited(visit.meta("anamInsuranceP1").dot())
+            cr.lineSplit(visit.meta("anamInsuranceP1").dot())
         }
 
         fun generateDocReception(file: File, patient: Patient, data: Data, visit: Visit): Boolean {

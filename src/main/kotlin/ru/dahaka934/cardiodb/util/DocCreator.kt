@@ -26,7 +26,7 @@ class DocCreator {
         }
     }
 
-    fun lineSplited(text: String = "", size: Int = 0, bold: Boolean = false) {
+    fun lineSplit(text: String = "", size: Int = 0, bold: Boolean = false) {
         text.split("\n").forEach {
             line(it, size, bold)
         }
