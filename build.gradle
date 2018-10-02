@@ -53,7 +53,7 @@ jfx {
     verbose = true
     mainClass = "ru.dahaka934.cardiodb.CardioDB"
     jfxAppOutputDir = "build/jfx/app"
-    jfxMainAppJarName = "project-jfx.jar"
+    jfxMainAppJarName = "CardioDB.jar"
     deployDir = "src/main/deploy"
     useEnvironmentRelativeExecutables = true
     libFolderName = "lib"
@@ -75,7 +75,7 @@ jfx {
     // String - setting this for windows-bundlers makes it possible to generate upgradeable installers (using same GUID)
     vendor = "Dahaka934"
     nativeOutputDir = "build/jfx/native"
-    bundler = "ALL"
+    bundler = "windows.app"
     // set this to some specific, if your don't want all bundlers running, examples "windows.app", "jnlp", ...
     jvmProperties = null // Map<String, String>
     jvmArgs = null // List<String>
@@ -89,7 +89,6 @@ jfx {
     additionalBundlerResources = null
     // path to some additional resources for the bundlers when creating application-bundle
     additionalAppResources = null // path to some additional resources when creating application-bundle
-    // secondaryLaunchers = [[appName:"somethingDifferent"], [appName:"somethingDifferent2"]]
     fileAssociations = null // List<Map<String, Object>>
     noBlobSigning = false // when using bundler "jnlp", you can choose to NOT use blob signing
     customBundlers = null // List<String>
@@ -120,20 +119,6 @@ jfx {
 
     // making it able to support absolute paths, defaults to "false" for maintaining old behaviour
     checkForAbsolutePaths = false
-
-    // gradle jfxGenerateKeyStore
-    keyStore = "src/main/deploy/keystore.jks"
-    keyStoreAlias = "myalias"
-    keyStorePassword = "password"
-    keyPassword = null // will default to keyStorePassword
-    keyStoreType = "jks"
-    overwriteKeyStore = false
-
-    certDomain = null // required
-    certOrgUnit = null // defaults to "none"
-    certOrg = null // required
-    certState = null // required
-    certCountry = null // required
 }
 
 task archive(type: Zip) {

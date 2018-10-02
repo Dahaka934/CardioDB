@@ -93,7 +93,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             cr.line("Проф. вредности: ${visit.meta("anamLifeP6").dot()} " +
                     "Наслед. ${visit.meta("anamLifeP7").dot()}")
 
-            if (data.sex == Sex.FEMALE) {
+            if (data.sex.value === Sex.FEMALE) {
                 cr.line("Последнее посещение гинеколога: ${convertedDate(visit.meta("anamLifeP8")).dot()}")
             }
             cr.line("Последняя ФЛГ орг. гр. кл. (со слов): ${convertedDate(visit.meta("anamLifeP9")).dot()}")
