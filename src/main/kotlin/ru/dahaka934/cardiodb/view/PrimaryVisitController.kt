@@ -148,7 +148,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             val creator = DocCreator()
             creator.paragraph {
                 style = "Top"
-                createRun("ПЕРВИЧНЫЙ ПРИЕМ", 9, true)
+                createRun("КОНСУЛЬТАТИВНОЕ ЗАКЛЮЧЕНИЕ", 9, true)
             }
 
             genDocHeader(creator, patient, data, visit)

@@ -187,6 +187,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(objStatusP16, objStatusP16c, true, false, "везикулярное", "жесткое", "жестковатое",
              "ослабленное", "сухие хрипы", "влажные хрипы", "хрипов нет")
         bind(objStatusP17, objStatusP17c, true, false, "мягкий", "напряжен", "безболезненный", "болезненный")
+        objStatusP17.text = "мягкий, безболезненный"
         bind(objStatusP18, objStatusP18c, true, true, "на уровне реберной дуги",
              "выступает из-под края реберной дуги на NN см")
         bind(objStatusP19, objStatusP19c, true, true, "безболезненно с обеих сторон", "болезненно")
@@ -292,16 +293,10 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                     "Поколачивание по пояснице ${visit.meta("objStatusP19").dot()} " +
                     "Периферические отеки: ${visit.meta("objStatusP20").dot()}")
             cr.line("Физиологические отправления ${visit.meta("objStatusP21")} (со слов).")
-            cr.paragraph {
-                createRun("На основании жалоб, анамнеза, объективных данных, данных обследования выставлен " +
-                          "${visit.meta("objStatusP22").toUpperCase()} диагноз.", bold = true) {
-                    fontSize = 10
-                }
-            }
         }
 
         fun genDocDiagnosis(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
-            cr.line("ДИАГНОЗЫ", 9, true)
+            cr.line("${visit.meta("objStatusP22").toUpperCase()} ДИАГНОЗ", 9, true)
             cr.doc.createTable(visit.diagnoses.size + 1, 3).apply {
                 getRow(0).apply {
                     getCell(0).apply {
