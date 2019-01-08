@@ -131,7 +131,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             genDocBHabits(creator, patient, data, visit)
             genDocAllergies(creator, patient, data, visit)
             genDocAnamInsurance(creator, patient, data, visit)
-            genDocObjStatus(creator, patient, data, visit)
+            genDocObjStatus(creator, patient, data, visit, true)
             genDocDiagnosis(creator, patient, data, visit)
             genDocCurrHelp(creator, patient, data, visit)
             genDocSurveyPlan(creator, patient, data, visit)
@@ -145,6 +145,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
 
         fun generateDocConclusion(file: File, patient: Patient, data: Data, visit: Visit): Boolean {
             val creator = DocCreator()
+            genPlace(creator)
             creator.paragraph {
                 style = "Top"
                 createRun("КОНСУЛЬТАТИВНОЕ ЗАКЛЮЧЕНИЕ", 9, true)

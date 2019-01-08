@@ -8,6 +8,7 @@ import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData.YES
 import javafx.scene.control.SelectionMode.SINGLE
+import javafx.scene.control.TableColumn.SortType.ASCENDING
 import javafx.scene.input.KeyCode
 import javafx.scene.layout.VBox
 import javafx.stage.Modality.APPLICATION_MODAL
@@ -38,6 +39,7 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
     fun init(diagnoses: ObservableList<Diagnose>) {
         this.diagnoses = diagnoses
         table.items = diagnoses
+        table.sortOrder.clear()
         table.sortOrder.add(columnType)
         table.sort()
     }
@@ -53,8 +55,14 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
         columnType.style = "-fx-alignment: CENTER;"
         columnCode.style = "-fx-alignment: CENTER;"
 
-        columnType.sortType = TableColumn.SortType.ASCENDING
+        columnType.sortTypeProperty().addListener { _, _, newValue ->
+            if (newValue != ASCENDING) {
+                columnType.sortType = ASCENDING
+            }
+        }
         columnType.isSortable = true
+        columnCode.isSortable = false
+        columnInfo.isSortable = false
 
         table.apply {
             selectionModel.selectionMode = SINGLE
@@ -116,8 +124,11 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
             isResizable = false
             controller.setDiagnose(diagnose)
             initModality(APPLICATION_MODAL)
-            controller.output?.let {
-                table.sort()
+            setOnCloseRequest {
+                controller.output?.let {
+                    table.select(it)
+                    table.sort()
+                }
             }
         }.showAndWait()
     }

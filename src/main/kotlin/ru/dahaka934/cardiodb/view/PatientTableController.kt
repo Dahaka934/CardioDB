@@ -9,7 +9,7 @@ import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData.YES
 import javafx.scene.control.SelectionMode.SINGLE
 import javafx.scene.input.KeyCode
-import javafx.scene.input.KeyCode.*
+import javafx.scene.input.KeyCode.F
 import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import javafx.stage.Modality.APPLICATION_MODAL
@@ -96,7 +96,7 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
         filterPanel.isVisible = false
 
         fieldFilter.setOnKeyPressed {
-            if (it.code == ENTER) {
+            if (it.code == KeyCode.ENTER) {
                 filterPatients(null)
             }
         }

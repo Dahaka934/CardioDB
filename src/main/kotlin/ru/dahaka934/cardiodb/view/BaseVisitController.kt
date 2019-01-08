@@ -57,6 +57,8 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
     @FXML lateinit var objStatusP16c: ComboBox<String>
     @FXML lateinit var objStatusP17: TextField
     @FXML lateinit var objStatusP17c: ComboBox<String>
+    @FXML lateinit var objStatusP17S1: TextField
+    @FXML lateinit var objStatusP17S1c: ComboBox<String>
     @FXML lateinit var objStatusP18: TextField
     @FXML lateinit var objStatusP18c: ComboBox<String>
     @FXML lateinit var objStatusP19: TextField
@@ -172,6 +174,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                 })
             }
         }
+
         bind(objStatusP6, objStatusP6c, true, false, "чистые", "с высыпаниями", "обычной окраски",
              "гиперемированы", "бледные", "нормальной влажности", "гипергидроз", "сухие")
         bind(objStatusP7)
@@ -179,20 +182,22 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(objStatusP9, "ЧСС=PS", "ЧЖС≠PS")
         bind(objStatusP10, "уд/мин.")
         bind(objStatusP11, objStatusP11c, true, false, "ритмичный", "аритмичный", "дефицита пульса нет",
-             "удовлетворительное наполнение", "напряжение")
-        bind(objStatusP12, objStatusP12c, true, false, "ясные", "звучные", "приглушены", "глухие", "ритмичные")
+             "удовлетворительного наполнения и напряжения", "напряжён")
+        bind(objStatusP12, objStatusP12c, true, false, "ясные", "звучные", "приглушены", "глухие", "ритмичные",
+             "аритмичные")
         bind(objStatusP13)
         bind(objStatusP14, objStatusP14c, true, false, "не выслушиваются", "систолический выслушивается",
              "диастолический выслушивается")
         bind(objStatusP15, "в мин.")
         bind(objStatusP16, objStatusP16c, true, false, "везикулярное", "жесткое", "жестковатое",
-             "ослабленное", "сухие хрипы", "влажные хрипы", "хрипов нет")
-        bind(objStatusP17, objStatusP17c, true, false, "мягкий", "напряжен", "безболезненный", "болезненный")
-        objStatusP17.text = "мягкий, безболезненный"
-        bind(objStatusP18, objStatusP18c, true, true, "на уровне реберной дуги",
-             "выступает из-под края реберной дуги на NN см")
-        bind(objStatusP19, objStatusP19c, true, true, "безболезненно с обеих сторон", "болезненно")
-        bind(objStatusP20, objStatusP20c, true, true, "нет", "отеки голеней", "пастозность", "лёгкая пастозность")
+             "ослабленное", "сухие хрипы", "влажные хрипы", "хрипов нет", "не выслушивается")
+        bind(objStatusP17, objStatusP17c, false, true, "мягкий", "напряженный")
+        bind(objStatusP17S1, objStatusP17S1c, false, true, "безболезненный", "чувствительный", "болезненный")
+        bind(objStatusP18, objStatusP18c, false, true, "на уровне реберной дуги",
+             "выступает из-под края реберной дуги на см")
+        bind(objStatusP19, objStatusP19c, false, true, "безболезненное с обеих сторон", "болезненное", "чувствительное")
+        bind(objStatusP20, objStatusP20c, false, true, "нет", "отёки голеней", "пастозность голеней",
+             "лёгкая пастозность голеней")
         bind(objStatusP21, objStatusP21c, true, true, "не изменены", "запоры", "поносы", "неустойчивый стул",
              "частое мочеиспускание", "затруднение при мочеиспускание")
         bind(objStatusP22, "клинический", "предварительный")
@@ -201,7 +206,8 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(currHelpP2)
 
         bind(surveyPlanP1, """
-            Общий анализ крови. Общий анализ мочи. Анализ крови на глюкозу АСТ, АЛТ, белирубин, холестерин (липиды), креатинин. Коагулограмма №1. Анализ крови на гормоны ТТГ, Т4своб. Анализ крови на электролиты К, Са, Mg, Na, Cl.
+            Общий анализ крови. Общий анализ мочи. Анализ крови на глюкозу АСТ, АЛТ, билирубин, холестерин (липиды), креатинин. Коагулограмма №1. Анализ крови на гормоны ТТГ, Т4своб. Анализ крови на электролиты К, Са, Mg, Na, Cl.
+            УЗИ почек, Дуплексное сканирование БЦА, Осмотр окулиста (глазное дно).
             ФЛГ, ЭКГ, ЭХОКГ, Суточный монитор ЭКГ (ЭКГ+АД).
             Консультация.
         """.trimIndent())
@@ -245,13 +251,21 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                 LocalDateISOConverter.fromString(dateISO))
         }
 
-        fun String?.dot(): String {
-            if (this == null || this.isEmpty()) {
+        fun String.dot(): String {
+            if (this.isEmpty()) {
                 return "."
             } else if (this.last() == '.') {
                 return this
             }
             return this + '.'
+        }
+
+        infix fun String.with(str: String): String {
+            return when {
+                this.isEmpty() -> str
+                str.isEmpty()  -> this
+                else           -> "$this, $str"
+            }
         }
 
         fun genDocHeader(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
@@ -274,13 +288,15 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             cr.lineSplit(visit.meta("complaintsP1").dot())
         }
 
-        fun genDocObjStatus(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
+        fun genDocObjStatus(cr: DocCreator, patient: Patient, data: Data, visit: Visit, primary: Boolean) {
             cr.line("ОБЪЕКТИВНЫЙ СТАТУС", 9, true)
             cr.line("Общее состояние: ${visit.meta("objStatusP1").dot()} " +
                     "Температура: ${visit.meta("objStatusP2")}C.")
-            cr.line("Рост: ${visit.meta("objStatusP3")}см. " +
-                    "Масса тела: ${visit.meta("objStatusP4")}см. " +
-                    "ИМТ: ${visit.meta("objStatusP5").dot()}")
+            if (primary) {
+                cr.line("Рост: ${visit.meta("objStatusP3")}см. " +
+                        "Масса тела: ${visit.meta("objStatusP4")}см. " +
+                        "ИМТ: ${visit.meta("objStatusP5").dot()}")
+            }
             cr.line("Кожные покровы ${visit.meta("objStatusP6").dot()}")
             cr.line("АД: левая рука ${visit.meta("objStatusP7")}мм.рт.ст., " +
                     "правая рука ${visit.meta("objStatusP8")}мм.рт.ст. " +
@@ -290,10 +306,10 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                     "акцент ${visit.meta("objStatusP13")}, " +
                     "шумы ${visit.meta("objStatusP14").dot()}")
             cr.line("ЧДД - ${visit.meta("objStatusP15")} в мин. Дыхание ${visit.meta("objStatusP16").dot()}")
-            cr.line("Живот ${visit.meta("objStatusP17").dot()} " +
+            cr.line("Живот ${(visit.meta("objStatusP17") with visit.meta("objStatusP17S1")).dot()} " +
                     "Печень ${visit.meta("objStatusP18").dot()} " +
                     "Поколачивание по пояснице ${visit.meta("objStatusP19").dot()} " +
-                    "Периферические отеки: ${visit.meta("objStatusP20").dot()}")
+                    "Периферические отёки: ${visit.meta("objStatusP20").dot()}")
             cr.line("Физиологические отправления ${visit.meta("objStatusP21")} (со слов).")
         }
 
@@ -319,7 +335,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
                     }
                     getCell(2).apply {
                         ctTc.addNewTcPr().addNewNoWrap()
-                        ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(12000)
+                        ctTc.addNewTcPr().addNewTcW().w = BigInteger.valueOf(11000)
                         paragraphs[0].apply {
                             alignment = ParagraphAlignment.CENTER
                             createRun("Наименование", bold = true)
@@ -383,6 +399,13 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             cr.line("Выдан первичный листок нетрудоспособности №${visit.meta("evnP3")} " +
                     "с ${convertedDate(visit.meta("evnP4"))} по ${convertedDate(visit.meta("evnP5"))}г.")
             cr.line("Явка ${convertedDate(visit.meta("evnP5"))}г.")
+        }
+
+        fun genPlace(cr: DocCreator) {
+            cr.paragraph {
+                style = "Top"
+                createRun(CardioDB.app.user.place, 9, true)
+            }
         }
 
         fun genSignature(cr: DocCreator) {

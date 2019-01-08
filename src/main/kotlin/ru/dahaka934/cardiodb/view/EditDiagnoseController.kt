@@ -1,5 +1,6 @@
 package ru.dahaka934.cardiodb.view
 
+import javafx.beans.binding.Bindings
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.input.KeyCode
@@ -9,21 +10,25 @@ import javafx.stage.WindowEvent
 import ru.dahaka934.cardiodb.data.Diagnose
 import ru.dahaka934.cardiodb.data.MKB10
 import ru.dahaka934.cardiodb.data.MKB10.Entry
-import ru.dahaka934.cardiodb.util.SimpleLinkedTree
 import ru.dahaka934.cardiodb.fxlib.FXController
 import ru.dahaka934.cardiodb.fxlib.FXHelper
+import ru.dahaka934.cardiodb.fxlib.component.FilterableTreeItem
+import ru.dahaka934.cardiodb.fxlib.component.FilterableTreeItem.Filter
+import ru.dahaka934.cardiodb.util.SimpleLinkedTree
+import java.util.concurrent.Callable
 
 class EditDiagnoseController : FXController<Pane>() {
     @FXML lateinit var fieldType: ChoiceBox<String>
     @FXML lateinit var fieldCode: TextField
     @FXML lateinit var fieldInfo: TextField
+    @FXML lateinit var fieldFilter: TextField
 
     @FXML lateinit var treeMkb10: TreeView<MKB10.Entry>
 
     @FXML lateinit var buttonSave: Button
     @FXML lateinit var buttonCancel: Button
 
-    @FXML lateinit var scroll: ScrollPane
+    private var fullTree: FilterableTreeItem<MKB10.Entry>? = null
 
     var output: Diagnose? = null
 
@@ -35,10 +40,28 @@ class EditDiagnoseController : FXController<Pane>() {
         output = diagnose
     }
 
-    private fun createMkbTreeItem(node: SimpleLinkedTree.Node<MKB10.Entry>): TreeItem<MKB10.Entry> {
-        return TreeItem(node.entry).apply {
+    private fun createMkbTreeItem(node: SimpleLinkedTree.Node<MKB10.Entry>,
+                                  filter: (MKB10.Entry) -> Boolean): FilterableTreeItem<MKB10.Entry>? {
+        val item = FilterableTreeItem(node.entry).apply {
             node.childs.forEach {
-                children += createMkbTreeItem(it)
+                val ch = createMkbTreeItem(it, filter)
+                if (ch != null) {
+                    sourceChildren() += ch
+                }
+            }
+        }
+
+        return if (item.children.isNotEmpty() || filter(node.entry)) item else null
+    }
+
+    private fun createMkbTree(filter: (MKB10.Entry) -> Boolean): FilterableTreeItem<MKB10.Entry>? {
+        val tree = MKB10.tree
+        return FilterableTreeItem(Entry("", "root", "")).also { root ->
+            tree.branches.forEach { branch ->
+                val ch = createMkbTreeItem(branch, filter)
+                if (ch != null) {
+                    root.sourceChildren() += ch
+                }
             }
         }
     }
@@ -70,15 +93,15 @@ class EditDiagnoseController : FXController<Pane>() {
             object : TreeCell<MKB10.Entry>() {
                 override fun updateItem(item: Entry?, empty: Boolean) {
                     super.updateItem(item, empty)
-                    if (!empty && item != null) {
-                        text = String.format("%-8s : %s", item.id, item.info)
-                    }
+                    text = (if (!empty && item != null) {
+                        String.format("%-8s : %s", item.id, item.info)
+                    } else "")
                 }
             }.apply {
                 font = Font.font("Courier New")
                 setOnMouseClicked {
                     val item = (it.source as TreeCell<MKB10.Entry>).item
-                    if (it.clickCount == 2) {
+                    if (item != null && it.clickCount == 2) {
                         fieldCode.text = item.id
                         fieldInfo.text = item.info
                     }
@@ -87,15 +110,35 @@ class EditDiagnoseController : FXController<Pane>() {
         }
 
         if (MKB10.isLoaded) {
+            fullTree = createMkbTree { true }
+            treeMkb10.root = fullTree
+            treeMkb10.isShowRoot = false
             treeMkb10.isVisible = true
 
-            val tree = MKB10.tree
-            treeMkb10.root = TreeItem(MKB10.Entry("", "root", "")).also { root ->
-                tree.branches.forEach { branch ->
-                    root.children += createMkbTreeItem(branch)
-                }
-            }
-            treeMkb10.isShowRoot = false
+            fullTree?.filterProperty()?.bind(
+                Bindings.createObjectBinding(Callable<Filter<Entry>> {
+                    if (fieldFilter.text.isNullOrEmpty()) {
+                        return@Callable null
+                    }
+
+                    object : Filter<Entry> {
+                        override fun test(node: TreeItem<Entry>): Boolean {
+                            val filter = fieldFilter.text
+
+                            val value = node.value
+                            val ret = value.id.startsWith(filter, ignoreCase = true) ||
+                                      value.info.indexOf(filter, ignoreCase = true) >= 0
+                            if (ret) {
+                                var curr = node
+                                while (curr.parent != null) {
+                                    curr = curr.parent
+                                    curr.isExpanded = true
+                                }
+                            }
+                            return ret
+                        }
+                    }
+                }, fieldFilter.textProperty()))
         } else {
             treeMkb10.isVisible = false
         }
