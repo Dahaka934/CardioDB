@@ -29,11 +29,15 @@ class Visit : Listenable {
 
     fun meta(id: String, def: String = "") = metaProperty(id, def).value ?: ""
 
-    fun copy() = Visit().also {
-        it.type.value = type.value
-        it.date.value = date.value
-        it.diagnoses.addAll(diagnoses)
-        it.meta.putAll(meta)
+    fun copy() = Visit().also { copy ->
+        copy.type.value = type.value
+        copy.date.value = date.value
+        diagnoses.forEach {
+            copy.diagnoses += it.copy()
+        }
+        meta.entries.forEach {
+            copy.meta[it.key] = SimpleStringProperty(it.value.value)
+        }
     }
 
     override fun addListener(action: () -> Unit) {

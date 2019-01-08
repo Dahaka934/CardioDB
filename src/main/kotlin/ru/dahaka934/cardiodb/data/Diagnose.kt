@@ -16,6 +16,12 @@ class Diagnose : Listenable {
         info.addListener { _, _, _ -> action() }
     }
 
+    fun copy() = Diagnose().also { copy ->
+        copy.type.value = type.value
+        copy.mkbID.value = mkbID.value
+        copy.info.value = info.value
+    }
+
     enum class Type : LocalizedObj {
         MAIN, COMPLEX, BKG, ACCOMP;
 
