@@ -80,7 +80,7 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
             cr.lineSplit(visit.meta("anamDiseaseP1").dot())
             cr.line("АД максимальное - ${visit.meta("anamDiseaseP2")}мм.рт.ст.  " +
                     "АД рабочее - ${visit.meta("anamDiseaseP3")}мм.рт.ст.")
-            cr.lineSplit("Постоянно принимает: ${visit.meta("anamDiseaseP4").dot()}")
+            cr.lineSplit("Постоянное лечение: ${visit.meta("anamDiseaseP4").dot()}")
         }
 
         fun genDocAnamLife(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {
