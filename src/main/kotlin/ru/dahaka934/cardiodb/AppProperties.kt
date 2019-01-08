@@ -3,6 +3,7 @@ package ru.dahaka934.cardiodb
 import ru.dahaka934.cardiodb.fxlib.toExistsFile
 import ru.dahaka934.cardiodb.fxlib.tryWithError
 import java.io.File
+import java.io.FileOutputStream
 import java.util.*
 
 object AppProperties : Properties() {
@@ -10,7 +11,7 @@ object AppProperties : Properties() {
 
     fun reload() {
         tryWithError("Не удалось загрузить '${file.name}'") {
-            file.inputStream().buffered().use {
+            file.inputStream().reader().buffered().use {
                 load(it)
             }
         }
@@ -18,10 +19,22 @@ object AppProperties : Properties() {
 
     fun save() {
         tryWithError("Не удалось сохранить '${file.name}'") {
-            file.outputStream().buffered().use {
+            FileOutputStream(file).writer().buffered().use {
                 store(it, "CardioDB config properties")
             }
         }
+    }
+
+    fun getStringList(key: String): List<String> {
+        val ret: String? = getProperty(key)
+        if (ret != null) {
+            return ret.split("|").asSequence().map { it.trim() }.toList()
+        }
+        return emptyList()
+    }
+
+    fun setStringList(key: String, list: Collection<String>) {
+        setProperty(key, list.joinToString(separator = "|") { it })
     }
 
     fun getStringOrPut(key: String, def: String): String {

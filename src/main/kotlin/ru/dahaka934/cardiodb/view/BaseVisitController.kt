@@ -390,7 +390,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             cr.line()
             cr.line()
             cr.paragraph {
-                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.app.user.value}", bold = true) {
+                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.app.user.name}", bold = true) {
                     alignment = CENTER
                     fontSize = 10
                 }

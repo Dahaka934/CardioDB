@@ -4,12 +4,16 @@ import javafx.application.Platform
 import javafx.beans.binding.Bindings
 import javafx.fxml.FXML
 import javafx.scene.Node
-import javafx.scene.control.*
+import javafx.scene.control.Button
+import javafx.scene.control.Label
+import javafx.scene.control.Tab
+import javafx.scene.control.TabPane
 import javafx.scene.control.TabPane.TabClosingPolicy.ALL_TABS
 import javafx.scene.input.KeyCode
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
+import javafx.stage.Modality.APPLICATION_MODAL
 import javafx.stage.StageStyle
 import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.fxlib.FXController
@@ -35,8 +39,8 @@ class MainController : FXController<BorderPane>() {
             }
         }
 
-        fieldUser.textProperty().bind(CardioDB.app.user)
-        if (fieldUser.text.isNullOrEmpty()) {
+        fieldUser.text = CardioDB.app.user.toString()
+        if (!CardioDB.app.user.isValid) {
             Platform.runLater { requestUser() }
         }
 
@@ -84,15 +88,14 @@ class MainController : FXController<BorderPane>() {
     }
 
     fun requestUser() {
-        val res = TextInputDialog(CardioDB.app.user.value).apply {
+        CardioDB.app.createWindow<EditUserController>("EditUserLayout.fxml") { controller ->
             title = "Пользователь"
-            headerText = "Введите имя пользователя"
+            isResizable = false
+            initModality(APPLICATION_MODAL)
             initStyle(StageStyle.UTILITY)
         }.showAndWait()
 
-        if (res.isPresent) {
-            CardioDB.app.user.value = res.get()
-        }
+        fieldUser.text = CardioDB.app.user.toString()
     }
 
     @FXML fun onUserClick(e: MouseEvent) {

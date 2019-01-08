@@ -39,12 +39,17 @@ class EditPatientController : FXController<Pane>() {
     }
 
     @FXML fun initialize() {
-        comboBoxJob.items.addAll("Пенсионер", "Инвалид I группы", "Инвалид II группы", "Инвалид III группы")
-        comboBoxSex.items.addAll(enumValues<Patient.Sex>().map { it.localName })
-
+        comboBoxJob.items.addAll("пенсионер", "инвалид I группы", "инвалид II группы", "инвалид III группы")
         comboBoxJob.setOnAction {
-            fieldJob.text = comboBoxJob.value
+            if (fieldJob.text.isNullOrEmpty()) {
+                fieldJob.text = comboBoxJob.value
+            } else {
+                fieldJob.text += ", ${comboBoxJob.value}"
+            }
         }
+
+        comboBoxSex.items.addAll(enumValues<Patient.Sex>().map { it.localName })
+        comboBoxSex.selectionModel.select(0)
 
         fieldName.textProperty().addListener { _ ->
             buttonSave.isDisable = fieldName.text.isEmpty()

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<ScrollPane fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="3000.0" prefWidth="793.0"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ru.dahaka934.cardiodb.view.PrimaryVisitController">
+
+<ScrollPane fitToWidth="true" minHeight="-Infinity" minWidth="-Infinity" prefHeight="3000.0" prefWidth="793.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.dahaka934.cardiodb.view.PrimaryVisitController">
     <content>
         <VBox>
             <children>
@@ -15,30 +15,27 @@
                             <children>
                                 <GridPane>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label text="ФИО пациента:"/>
-                                        <Label text="Дата рождения:" GridPane.rowIndex="1"/>
-                                        <Label prefHeight="17.0" prefWidth="144.0" text="Дата консультации:"
-                                               GridPane.rowIndex="2"/>
-                                        <Label fx:id="headerName" text="Label" GridPane.columnIndex="1"/>
-                                        <DatePicker fx:id="headerVisitDate" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="2"/>
-                                        <Label fx:id="headerBirthday" text="Label" GridPane.columnIndex="1"
-                                               GridPane.rowIndex="1"/>
+                                        <Label text="ФИО пациента:" />
+                                        <Label text="Дата рождения:" GridPane.rowIndex="1" />
+                                        <Label prefHeight="17.0" prefWidth="144.0" text="Дата консультации:" GridPane.rowIndex="2" />
+                                        <Label fx:id="headerName" text="Label" GridPane.columnIndex="1" />
+                                        <DatePicker fx:id="headerVisitDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label fx:id="headerBirthday" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                     <padding>
-                                        <Insets bottom="-10.0" top="-10.0"/>
+                                        <Insets bottom="-10.0" top="-10.0" />
                                     </padding>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" top="5.0" />
                                     </VBox.margin>
                                 </GridPane>
                             </children>
@@ -49,7 +46,7 @@
                     <content>
                         <VBox>
                             <children>
-                                <TextArea fx:id="complaintsP1" prefHeight="70.0" wrapText="true"/>
+                                <TextArea fx:id="complaintsP1" prefHeight="70.0" wrapText="true" />
                             </children>
                         </VBox>
                     </content>
@@ -58,30 +55,27 @@
                     <content>
                         <VBox>
                             <children>
-                                <TextArea fx:id="anamDiseaseP1" prefHeight="70.0" wrapText="true"/>
+                                <TextArea fx:id="anamDiseaseP1" prefHeight="70.0" wrapText="true" />
                                 <GridPane>
                                     <children>
-                                        <Label text="АД максимальное (мм.рт.ст):"/>
-                                        <Label text="АД рабочее (мм.рт.ст):" GridPane.rowIndex="1"/>
-                                        <Label text="Постоянное лечение:" GridPane.rowIndex="2"/>
-                                        <TextArea fx:id="anamDiseaseP4" prefHeight="35.0" GridPane.columnIndex="1"
-                                                  GridPane.rowIndex="2"/>
-                                        <TextField fx:id="anamDiseaseP2" promptText="NN/NN" text="/"
-                                                   GridPane.columnIndex="1"/>
-                                        <TextField fx:id="anamDiseaseP3" promptText="NN/NN" text="/"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                        <Label text="АД максимальное (мм.рт.ст):" />
+                                        <Label text="АД рабочее (мм.рт.ст):" GridPane.rowIndex="1" />
+                                        <Label text="Постоянное лечение:" GridPane.rowIndex="2" />
+                                        <TextArea fx:id="anamDiseaseP4" prefHeight="35.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextField fx:id="anamDiseaseP2" promptText="NN/NN" text="/" GridPane.columnIndex="1" />
+                                        <TextField fx:id="anamDiseaseP3" promptText="NN/NN" text="/" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" />
                                     </rowConstraints>
                                     <VBox.margin>
-                                        <Insets bottom="5.0" top="5.0"/>
+                                        <Insets bottom="5.0" top="5.0" />
                                     </VBox.margin>
                                 </GridPane>
                             </children>
@@ -94,53 +88,45 @@
                             <children>
                                 <Label text="Перенесенные заболевания, травмы, операции:">
                                     <padding>
-                                        <Insets bottom="5.0"/>
+                                        <Insets bottom="5.0" />
                                     </padding>
                                 </Label>
-                                <TextArea fx:id="anamLifeP1" prefHeight="70.0" wrapText="true"/>
+                                <TextArea fx:id="anamLifeP1" prefHeight="70.0" wrapText="true" />
                                 <GridPane>
                                     <children>
-                                        <Label text="Гепатит:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <Label text="В24:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <Label text="Tbc:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <Label text="ЗППП:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                                        <Label text="Проф. вредности:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                                        <Label text="Наслед.:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                                        <Label text="Посещение гинеколога:" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="6"/>
-                                        <Label text="Последняя ФЛГ орг. гр. кл.:" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="7"/>
-                                        <TextField fx:id="anamLifeP2" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="anamLifeP3" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="anamLifeP4" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="anamLifeP5" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                                        <TextField fx:id="anamLifeP6" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                                        <TextField fx:id="anamLifeP7" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                                        <DatePicker fx:id="anamLifeP8" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                                        <DatePicker fx:id="anamLifeP9" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                                        <Label text="Гепатит:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label text="В24:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <Label text="Tbc:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <Label text="ЗППП:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                        <Label text="Проф. вредности:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                        <Label text="Наслед.:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                        <Label text="Посещение гинеколога:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                        <Label text="Последняя ФЛГ орг. гр. кл.:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                                        <TextField fx:id="anamLifeP2" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <TextField fx:id="anamLifeP3" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="anamLifeP4" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextField fx:id="anamLifeP5" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <TextField fx:id="anamLifeP6" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <TextField fx:id="anamLifeP7" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="anamLifeP8" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <TextField fx:id="anamLifeP9" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                     <padding>
-                                        <Insets top="5.0"/>
+                                        <Insets top="5.0" />
                                     </padding>
                                 </GridPane>
                             </children>
@@ -153,25 +139,21 @@
                             <children>
                                 <GridPane>
                                     <children>
-                                        <Label text="Курение:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <Label text="Злоупотребление алкоголем:" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="1"/>
-                                        <Label text="Прием ПАВ:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="bhabitsP1" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="bhabitsP2" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="bhabitsP3" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <Label text="Курение:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label text="Злоупотребление алкоголем:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <Label text="Прием ПАВ:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <TextField fx:id="bhabitsP1" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <TextField fx:id="bhabitsP2" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="bhabitsP3" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                 </GridPane>
                             </children>
@@ -184,24 +166,21 @@
                             <children>
                                 <GridPane>
                                     <children>
-                                        <Label text="Лекарственные:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <Label text="Пищевые:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <Label text="Прочие:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="allergiesP1" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <TextField fx:id="allergiesP2" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="allergiesP3" promptText="отрицает" text="отрицает"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                        <Label text="Лекарственные:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label text="Пищевые:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <Label text="Прочие:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <TextField fx:id="allergiesP1" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <TextField fx:id="allergiesP2" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="allergiesP3" promptText="отрицает" text="отрицает" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                 </GridPane>
                             </children>
@@ -212,8 +191,7 @@
                     <content>
                         <VBox>
                             <children>
-                                <TextArea fx:id="anamInsuranceP1" prefHeight="50.0"
-                                          text="Не имеет листка нетрудоспособности" wrapText="true"/>
+                                <TextArea fx:id="anamInsuranceP1" prefHeight="50.0" text="Не имеет листка нетрудоспособности" wrapText="true" />
                             </children>
                         </VBox>
                     </content>
@@ -224,192 +202,159 @@
                             <children>
                                 <GridPane>
                                     <children>
-                                        <Label text="Общее состояние:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                        <Label text="Температура:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <Label text="Рост (см):" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                        <Label text="Масса (кг):" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                                        <Label text="Кожные покровы:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                                        <Label text="АД левой руки (мм.рт.ст):" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="6"/>
-                                        <Label text="АД правой руки (мм.рт.ст):" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="7"/>
-                                        <Label text="Тоны сердца:" GridPane.columnIndex="0" GridPane.rowIndex="10"/>
-                                        <Label text="ЧДД:" GridPane.columnIndex="0" GridPane.rowIndex="13"/>
-                                        <Label text="Живот:" GridPane.columnIndex="0" GridPane.rowIndex="15"/>
-                                        <Label text="Печень:" GridPane.columnIndex="0" GridPane.rowIndex="16"/>
-                                        <Label text="Периферические отеки:" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="18"/>
-                                        <Label text="Физиологические отправления:" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="19"/>
+                                        <Label text="Общее состояние:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label text="Температура:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <Label text="Рост (см):" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                        <Label text="Масса (кг):" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                        <Label text="Кожные покровы:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                        <Label text="АД левой руки (мм.рт.ст):" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                        <Label text="АД правой руки (мм.рт.ст):" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                                        <Label text="Тоны сердца:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                                        <Label text="ЧДД:" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+                                        <Label text="Живот:" GridPane.columnIndex="0" GridPane.rowIndex="15" />
+                                        <Label text="Печень:" GridPane.columnIndex="0" GridPane.rowIndex="16" />
+                                        <Label text="Периферические отеки:" GridPane.columnIndex="0" GridPane.rowIndex="18" />
+                                        <Label text="Физиологические отправления:" GridPane.columnIndex="0" GridPane.rowIndex="19" />
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                                             <right>
-                                                <ComboBox fx:id="objStatusP1c" prefHeight="25.0" prefWidth="21.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP1c" prefHeight="25.0" prefWidth="21.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP1" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP1" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <TextField fx:id="objStatusP2" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="objStatusP3" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                        <TextField fx:id="objStatusP4" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="5">
+                                        <TextField fx:id="objStatusP2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <TextField fx:id="objStatusP3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextField fx:id="objStatusP4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                             <right>
-                                                <ComboBox fx:id="objStatusP6c" prefHeight="25.0" prefWidth="0.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP6c" prefHeight="25.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP6" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP6" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <TextField fx:id="objStatusP7" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                                        <TextField fx:id="objStatusP8" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-                                        <ComboBox fx:id="objStatusP9" prefHeight="25.0" prefWidth="200.0"
-                                                  GridPane.rowIndex="8"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="9">
+                                        <TextField fx:id="objStatusP7" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                        <TextField fx:id="objStatusP8" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                        <ComboBox fx:id="objStatusP9" prefHeight="25.0" prefWidth="200.0" GridPane.rowIndex="8" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9">
                                             <right>
-                                                <ComboBox fx:id="objStatusP11c" prefHeight="25.0" prefWidth="18.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP11c" prefHeight="25.0" prefWidth="18.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP11" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP11" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <Label text="Пульс:" GridPane.rowIndex="9"/>
-                                        <TextField fx:id="objStatusP10" promptText="NN уд/мин." text=" уд/мин."
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="10">
+                                        <Label text="Пульс:" GridPane.rowIndex="9" />
+                                        <TextField fx:id="objStatusP10" promptText="NN уд/мин." text=" уд/мин." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
                                             <right>
-                                                <ComboBox fx:id="objStatusP12c" prefHeight="25.0" prefWidth="24.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP12c" prefHeight="25.0" prefWidth="24.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP12" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP12" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <Label text="Акцент:" GridPane.rowIndex="11"/>
-                                        <TextField fx:id="objStatusP13" GridPane.columnIndex="1"
-                                                   GridPane.rowIndex="11"/>
-                                        <Label text="Шумы:" GridPane.rowIndex="12"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="12">
+                                        <Label text="Акцент:" GridPane.rowIndex="11" />
+                                        <TextField fx:id="objStatusP13" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                        <Label text="Шумы:" GridPane.rowIndex="12" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="12">
                                             <right>
-                                                <ComboBox fx:id="objStatusP14c" prefHeight="25.0" prefWidth="4.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP14c" prefHeight="25.0" prefWidth="4.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP14" prefHeight="25.0" prefWidth="563.0"
-                                                           BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP14" prefHeight="25.0" prefWidth="563.0" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <TextField fx:id="objStatusP15" promptText="NN в мин." text="в мин."
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="13"/>
-                                        <Label text="Дыхание:" GridPane.rowIndex="14"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="14">
+                                        <TextField fx:id="objStatusP15" promptText="NN в мин." text="в мин." GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                                        <Label text="Дыхание:" GridPane.rowIndex="14" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="14">
                                             <right>
-                                                <ComboBox fx:id="objStatusP16c" prefHeight="25.0" prefWidth="0.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP16c" prefHeight="25.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP16" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP16" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="15">
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="15">
                                             <right>
-                                                <ComboBox fx:id="objStatusP17c" prefHeight="25.0" prefWidth="15.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP17c" prefHeight="25.0" prefWidth="15.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP17" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP17" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="16">
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="16">
                                             <right>
-                                                <ComboBox fx:id="objStatusP18c" prefHeight="25.0" prefWidth="0.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP18c" prefHeight="25.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP18" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP18" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <Label text="Поколачивание по пояснице:" GridPane.rowIndex="17"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="17">
+                                        <Label text="Поколачивание по пояснице:" GridPane.rowIndex="17" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="17">
                                             <right>
-                                                <ComboBox fx:id="objStatusP19c" prefHeight="25.0" prefWidth="4.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP19c" prefHeight="25.0" prefWidth="4.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP19" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP19" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="18">
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="18">
                                             <right>
-                                                <ComboBox fx:id="objStatusP20c" prefHeight="25.0" prefWidth="0.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP20c" prefHeight="25.0" prefWidth="0.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP20" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP20" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="19">
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="19">
                                             <right>
-                                                <ComboBox fx:id="objStatusP21c" prefHeight="25.0" prefWidth="7.0"
-                                                          BorderPane.alignment="CENTER"/>
+                                                <ComboBox fx:id="objStatusP21c" prefHeight="25.0" prefWidth="7.0" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP21" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP21" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <Label text="ИМТ:" GridPane.rowIndex="4"/>
-                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
-                                                    GridPane.rowIndex="4">
+                                        <Label text="ИМТ:" GridPane.rowIndex="4" />
+                                        <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                             <right>
-                                                <Button fx:id="objStatusP5b" mnemonicParsing="false"
-                                                        text="Перерассчитать" BorderPane.alignment="CENTER"/>
+                                                <Button fx:id="objStatusP5b" mnemonicParsing="false" text="Перерассчитать" BorderPane.alignment="CENTER" />
                                             </right>
                                             <center>
-                                                <TextField fx:id="objStatusP5" BorderPane.alignment="CENTER"/>
+                                                <TextField fx:id="objStatusP5" BorderPane.alignment="CENTER" />
                                             </center>
                                         </BorderPane>
-                                        <Label text="Диагноз:" GridPane.rowIndex="20"/>
-                                        <ComboBox fx:id="objStatusP22" prefHeight="25.0" prefWidth="250.0"
-                                                  GridPane.columnIndex="1" GridPane.rowIndex="20"/>
+                                        <Label text="Диагноз:" GridPane.rowIndex="20" />
+                                        <ComboBox fx:id="objStatusP22" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="20" />
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                 </GridPane>
                             </children>
@@ -426,10 +371,10 @@
                             <children>
                                 <CheckBox fx:id="currHelpP1" mnemonicParsing="false" selected="true" text="Скрыть">
                                     <padding>
-                                        <Insets bottom="5.0"/>
+                                        <Insets bottom="5.0" />
                                     </padding>
                                 </CheckBox>
-                                <TextArea fx:id="currHelpP2" prefHeight="100.0" wrapText="true"/>
+                                <TextArea fx:id="currHelpP2" prefHeight="100.0" wrapText="true" />
                             </children>
                         </VBox>
                     </content>
@@ -438,7 +383,7 @@
                     <content>
                         <VBox>
                             <children>
-                                <TextArea fx:id="surveyPlanP1" prefHeight="100.0" wrapText="true"/>
+                                <TextArea fx:id="surveyPlanP1" prefHeight="100.0" wrapText="true" />
                             </children>
                         </VBox>
                     </content>
@@ -447,7 +392,7 @@
                     <content>
                         <VBox>
                             <children>
-                                <TextArea fx:id="treatPlanP1" prefHeight="100.0" wrapText="true"/>
+                                <TextArea fx:id="treatPlanP1" prefHeight="100.0" wrapText="true" />
                             </children>
                         </VBox>
                     </content>
@@ -456,7 +401,7 @@
                     <content>
                         <VBox>
                             <children>
-                                <TextArea fx:id="recommsP1" prefHeight="100.0" wrapText="true"/>
+                                <TextArea fx:id="recommsP1" prefHeight="100.0" wrapText="true" />
                             </children>
                         </VBox>
                     </content>
@@ -467,31 +412,29 @@
                             <children>
                                 <CheckBox fx:id="evnP1" mnemonicParsing="false" selected="true" text="Скрыть">
                                     <padding>
-                                        <Insets bottom="5.0"/>
+                                        <Insets bottom="5.0" />
                                     </padding>
                                 </CheckBox>
-                                <TextArea fx:id="evnP2" prefHeight="100.0" wrapText="true"/>
+                                <TextArea fx:id="evnP2" prefHeight="100.0" wrapText="true" />
                                 <GridPane>
                                     <children>
-                                        <Label text="Листок нетрудоспособности №:" GridPane.columnIndex="0"
-                                               GridPane.rowIndex="0"/>
-                                        <Label text="Дата (с/по):" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                        <TextField fx:id="evnP3" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0"
-                                              GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                        <Label text="Листок нетрудоспособности №:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                        <Label text="Дата (с/по):" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                        <TextField fx:id="evnP3" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                             <children>
-                                                <DatePicker fx:id="evnP4"/>
-                                                <DatePicker fx:id="evnP5"/>
+                                                <DatePicker fx:id="evnP4" />
+                                                <DatePicker fx:id="evnP5" />
                                             </children>
                                         </HBox>
                                     </children>
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
-                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" minWidth="0.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                     </rowConstraints>
                                 </GridPane>
                             </children>

@@ -1,7 +1,6 @@
 package ru.dahaka934.cardiodb.view
 
 import javafx.fxml.FXML
-import javafx.scene.control.DatePicker
 import javafx.scene.control.ScrollPane
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
@@ -27,8 +26,8 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
     @FXML lateinit var anamLifeP5: TextField
     @FXML lateinit var anamLifeP6: TextField
     @FXML lateinit var anamLifeP7: TextField
-    @FXML lateinit var anamLifeP8: DatePicker
-    @FXML lateinit var anamLifeP9: DatePicker
+    @FXML lateinit var anamLifeP8: TextField
+    @FXML lateinit var anamLifeP9: TextField
 
     @FXML lateinit var bhabitsP1: TextField
     @FXML lateinit var bhabitsP2: TextField
