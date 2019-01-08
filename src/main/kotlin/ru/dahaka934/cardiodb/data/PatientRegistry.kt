@@ -16,23 +16,28 @@ import java.util.concurrent.CompletableFuture
 class PatientRegistry {
     private lateinit var patientMap: HashMap<Int, Patient>
     private lateinit var patientMapInv: HashMap<Patient, Int>
-    val patients = FXCollections.observableArrayList<Patient>()
     private val dataMap = FXCollections.observableHashMap<Patient, Patient.Data>()
+    private val saveRequests = ObjectOpenHashSet<Patient>()
     private var lastId: Int = 0
+
+    val patients = FXCollections.observableArrayList<Patient>()
+    val isDirty = SimpleBooleanProperty(false)
 
     private val dirRegistry = File("data").toDir()
     private val dirMapping = File(dirRegistry, "patients").toDir()
     private val fileHeader = File(dirRegistry, "patients.json")
 
-    val isDirty = SimpleBooleanProperty(false)
-    private val saveRequests = ObjectOpenHashSet<Patient>()
-
     init {
         patients.addListener { c: Change<out Patient> ->
             while (c.next()) {
-                c.addedSubList.forEach { manageObject(it, null) }
+                c.addedSubList.removeIf {
+                    if (patientMapInv.containsKey(it)) {
+                        manageObject(it, null)
+                        isDirty.value = true
+                        false
+                    } else true
+                }
             }
-            isDirty.value = true
         }
     }
 
@@ -108,13 +113,19 @@ class PatientRegistry {
     }
 
     fun register(patient: Patient, data: Patient.Data) {
+        if (patientMapInv[patient] != null) {
+            return
+        }
+
         ++lastId
         patientMap[lastId] = patient
         patientMapInv[patient] = lastId
         dataMap[patient] = data
+        patients.add(patient)
         manageObject(data, patient)
         saveRequests += patient
-        patients.add(patient)
+
+        CardioDB.app.log("Register patient '${patient.name.value}' with id:$lastId")
     }
 
     fun unregister(patient: Patient) {
@@ -128,6 +139,8 @@ class PatientRegistry {
         if (file.exists()) {
             file.delete()
         }
+
+        CardioDB.app.log("Unregister patient '${patient.name.value}' with id:$id")
     }
 
     fun saveAllAsync() {
