@@ -1,10 +1,10 @@
-package ru.dahaka934.cardiodb.view.internal
+package ru.dahaka934.cardiodb.fxlib
 
 import javafx.application.Platform
 import javafx.scene.Node
 import javafx.stage.Stage
 
-abstract class Controller<N : Node> {
+abstract class FXController<N : Node> {
     lateinit var stage: Stage
         private set
     lateinit var node: N

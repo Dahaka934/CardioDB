@@ -1,4 +1,4 @@
-package ru.dahaka934.cardiodb.util
+package ru.dahaka934.cardiodb.fxlib.internal
 
 import javafx.util.StringConverter
 import java.time.LocalDate

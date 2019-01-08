@@ -8,10 +8,10 @@ import javafx.scene.layout.Pane
 import javafx.stage.WindowEvent
 import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Patient
-import ru.dahaka934.cardiodb.view.internal.Controller
-import ru.dahaka934.cardiodb.view.internal.FXHelper
+import ru.dahaka934.cardiodb.fxlib.FXController
+import ru.dahaka934.cardiodb.fxlib.FXHelper
 
-class EditPatientController : Controller<Pane>() {
+class EditPatientController : FXController<Pane>() {
     @FXML lateinit var fieldName: TextField
     @FXML lateinit var comboBoxSex: ChoiceBox<String>
     @FXML lateinit var fieldBirthday: DatePicker
@@ -29,7 +29,7 @@ class EditPatientController : Controller<Pane>() {
         fieldName.text = patient.name.value
         fieldBirthday.value = patient.birthday.value
 
-        val data = CardioDB.registry.getData(patient)
+        val data = CardioDB.app.registry.getData(patient)
         comboBoxSex.selectionModel.select(FXHelper.convSex.toString(data.sex.value))
         fieldAddress.text = data.address.value
         fieldJob.text = data.job.value

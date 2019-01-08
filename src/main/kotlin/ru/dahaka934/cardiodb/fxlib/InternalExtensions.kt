@@ -1,9 +1,8 @@
-package ru.dahaka934.cardiodb.util
+package ru.dahaka934.cardiodb.fxlib
 
 import javafx.concurrent.Task
 import org.apache.commons.io.FileUtils
 import ru.dahaka934.cardiodb.CardioDB
-import ru.dahaka934.cardiodb.view.internal.FXHelper
 import java.io.File
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
@@ -87,7 +86,7 @@ inline fun <T, U> CompletableFuture<T>.thenApplyFX(crossinline action: (T) -> U)
         setOnFailed { ret.completeExceptionally(exception) }
         setOnCancelled { ret.cancel(false) }
     }
-    CardioDB.executor.execute(jfxTask)
+    CardioDB.app.executor.execute(jfxTask)
     return ret
 }
 

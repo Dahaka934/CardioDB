@@ -14,10 +14,11 @@ import javafx.stage.Modality.APPLICATION_MODAL
 import javafx.stage.StageStyle
 import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Diagnose
-import ru.dahaka934.cardiodb.view.internal.FXHelper
-import ru.dahaka934.cardiodb.view.internal.TableEnumLocalizedCell
-import ru.dahaka934.cardiodb.view.internal.TableIndexCell
-import ru.dahaka934.cardiodb.view.internal.select
+import ru.dahaka934.cardiodb.data.Diagnose.Type
+import ru.dahaka934.cardiodb.fxlib.FXHelper
+import ru.dahaka934.cardiodb.fxlib.component.TableEnumLocalizedCell
+import ru.dahaka934.cardiodb.fxlib.component.TableIndexCell
+import ru.dahaka934.cardiodb.fxlib.select
 
 class DiagnosisTableController : MainController.ControllerTab<VBox>() {
     @FXML lateinit var table: TableView<Diagnose>
@@ -46,7 +47,7 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
         columnCode.setCellValueFactory { it.value.mkbID }
         columnInfo.setCellValueFactory { it.value.info }
         columnIndex.setCellFactory { TableIndexCell() }
-        columnType.setCellFactory { TableEnumLocalizedCell<Diagnose, Diagnose.Type>() }
+        columnType.setCellFactory { TableEnumLocalizedCell<Diagnose, Type>() }
 
         columnIndex.style = "-fx-alignment: CENTER;"
         columnType.style = "-fx-alignment: CENTER;"
@@ -94,7 +95,7 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
     }
 
     @FXML fun newDiagnose(e: ActionEvent) {
-        CardioDB.createWindow<EditDiagnoseController>("EditDiagnoseLayout.fxml") { controller ->
+        CardioDB.app.createWindow<EditDiagnoseController>("EditDiagnoseLayout.fxml") { controller ->
             title = "Новый диагноз"
             isResizable = false
             initModality(APPLICATION_MODAL)
@@ -110,7 +111,7 @@ class DiagnosisTableController : MainController.ControllerTab<VBox>() {
 
     @FXML fun modifyDiagnose(e: ActionEvent?) {
         val diagnose = table.selectionModel.selectedItem ?: return
-        CardioDB.createWindow<EditDiagnoseController>("EditDiagnoseLayout.fxml") { controller ->
+        CardioDB.app.createWindow<EditDiagnoseController>("EditDiagnoseLayout.fxml") { controller ->
             title = "Изменение диагноза"
             isResizable = false
             controller.setDiagnose(diagnose)

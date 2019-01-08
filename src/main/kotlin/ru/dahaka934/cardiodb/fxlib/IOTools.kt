@@ -1,4 +1,4 @@
-package ru.dahaka934.cardiodb.util
+package ru.dahaka934.cardiodb.fxlib
 
 import org.apache.commons.io.FileUtils
 import org.apache.commons.io.IOUtils

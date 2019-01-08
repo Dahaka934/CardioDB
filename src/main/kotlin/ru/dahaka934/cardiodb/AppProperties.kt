@@ -1,7 +1,7 @@
 package ru.dahaka934.cardiodb
 
-import ru.dahaka934.cardiodb.util.toExistsFile
-import ru.dahaka934.cardiodb.util.tryWithError
+import ru.dahaka934.cardiodb.fxlib.toExistsFile
+import ru.dahaka934.cardiodb.fxlib.tryWithError
 import java.io.File
 import java.util.*
 

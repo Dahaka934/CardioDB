@@ -3,6 +3,8 @@ package ru.dahaka934.cardiodb.util
 import org.apache.poi.xwpf.usermodel.XWPFDocument
 import org.apache.poi.xwpf.usermodel.XWPFParagraph
 import org.apache.poi.xwpf.usermodel.XWPFRun
+import ru.dahaka934.cardiodb.fxlib.IOTools
+import ru.dahaka934.cardiodb.fxlib.tryWithError
 import java.io.File
 
 class DocCreator {

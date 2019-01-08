@@ -1,7 +1,6 @@
-package ru.dahaka934.cardiodb.util
+package ru.dahaka934.cardiodb.fxlib.internal
 
 import javafx.util.StringConverter
-import ru.dahaka934.cardiodb.data.LocalizedObj
 
 class LocalizedEnumConverter<T>(val klass: Class<T>) : StringConverter<T>()
     where T : Enum<T>, T : LocalizedObj {

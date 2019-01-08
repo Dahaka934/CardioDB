@@ -5,7 +5,11 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener.Change
 import ru.dahaka934.cardiodb.CardioDB
-import ru.dahaka934.cardiodb.util.*
+import ru.dahaka934.cardiodb.fxlib.IOTools
+import ru.dahaka934.cardiodb.fxlib.completable
+import ru.dahaka934.cardiodb.fxlib.thenApplyFX
+import ru.dahaka934.cardiodb.fxlib.toDir
+import ru.dahaka934.cardiodb.util.GsonHelper
 import java.io.File
 import java.util.concurrent.CompletableFuture
 
@@ -48,7 +52,7 @@ class PatientRegistry {
     }
 
     fun reloadAsync(): CompletableFuture<Unit> {
-        return CardioDB.executor.completable {
+        return CardioDB.app.executor.completable {
             GsonHelper.readObjOrRewrite<HashMap<Int, Patient>>(fileHeader, ::HashMap)
         }.thenApplyFX {
             patientMap = it
@@ -60,7 +64,7 @@ class PatientRegistry {
             patients.addAll(patientMap.values.toList())
             isDirty.value = false
 
-            CardioDB.log("Reload patients data")
+            CardioDB.app.log("Reload patients data")
         }
     }
 
@@ -69,16 +73,16 @@ class PatientRegistry {
             GsonHelper.readObjOrRewrite(File(dirMapping, "${reqId(patient)}.json"), Patient::Data).also {
                 manageObject(it, patient)
 
-                CardioDB.log("Read '${patient.name.value}' data")
+                CardioDB.app.log("Read '${patient.name.value}' data")
             }
         }
     }
 
     fun savePatientsAsync(): CompletableFuture<Unit> {
         val str = GsonHelper.writeObj(patientMap)
-        CardioDB.log("Saving patients data")
+        CardioDB.app.log("Saving patients data")
         return if (str != null) {
-            CardioDB.executor.completable {
+            CardioDB.app.executor.completable {
                 IOTools.writeString(fileHeader, str, false)
             }
         } else {
@@ -91,9 +95,9 @@ class PatientRegistry {
         return if (data != null) {
             val str = GsonHelper.writeObj(data)
             return if (str != null) {
-                CardioDB.executor.completable {
+                CardioDB.app.executor.completable {
                     IOTools.writeString(File(dirMapping, "${reqId(patient)}.json"), str, false)
-                    CardioDB.log("Saving '${patient.name.value}' data")
+                    CardioDB.app.log("Saving '${patient.name.value}' data")
                 }
             } else {
                 CompletableFuture.completedFuture(Unit)

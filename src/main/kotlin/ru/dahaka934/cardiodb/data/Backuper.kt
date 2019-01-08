@@ -4,10 +4,10 @@ import it.unimi.dsi.fastutil.io.FastBufferedOutputStream
 import org.apache.commons.io.IOUtils
 import ru.dahaka934.cardiodb.AppProperties
 import ru.dahaka934.cardiodb.CardioDB
-import ru.dahaka934.cardiodb.util.IOTools
-import ru.dahaka934.cardiodb.util.LocalDateConverter
-import ru.dahaka934.cardiodb.util.toDir
-import ru.dahaka934.cardiodb.util.tryWithError
+import ru.dahaka934.cardiodb.fxlib.IOTools
+import ru.dahaka934.cardiodb.fxlib.internal.LocalDateConverter
+import ru.dahaka934.cardiodb.fxlib.toDir
+import ru.dahaka934.cardiodb.fxlib.tryWithError
 import java.io.*
 import java.time.LocalDate
 import java.util.*
@@ -39,7 +39,7 @@ object Backuper {
         if (lastBackup + backupFreq <= currTime) {
             makeBackup()
             AppProperties.setProperty("backupLast", currTime.toString())
-            CardioDB.log("Backup data")
+            CardioDB.app.log("Backup data")
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.dahaka934.cardiodb.data
+package ru.dahaka934.cardiodb.fxlib.internal
 
 interface LocalizedObj {
     val localName: String

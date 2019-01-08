@@ -6,6 +6,7 @@ import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener.Change
 import javafx.collections.MapChangeListener
 import ru.dahaka934.cardiodb.data.Visit.Type.PRIMARY
+import ru.dahaka934.cardiodb.fxlib.internal.LocalizedObj
 import java.time.LocalDate
 
 class Visit : Listenable {

@@ -12,9 +12,9 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import javafx.stage.StageStyle
 import ru.dahaka934.cardiodb.CardioDB
-import ru.dahaka934.cardiodb.view.internal.Controller
+import ru.dahaka934.cardiodb.fxlib.FXController
 
-class MainController : Controller<BorderPane>() {
+class MainController : FXController<BorderPane>() {
 
     @FXML lateinit var tabPane: TabPane
     @FXML lateinit var tabDataBase: Tab
@@ -35,23 +35,23 @@ class MainController : Controller<BorderPane>() {
             }
         }
 
-        fieldUser.textProperty().bind(CardioDB.user)
+        fieldUser.textProperty().bind(CardioDB.app.user)
         if (fieldUser.text.isNullOrEmpty()) {
             Platform.runLater { requestUser() }
         }
 
-        val node = CardioDB.loadNode<VBox>("PatientTableLayout.fxml")
+        val node = CardioDB.app.loadNode<VBox>("PatientTableLayout.fxml")
         tabDataBase.content = node
-        CardioDB.getLoadedController<PatientTableController>().let {
+        CardioDB.app.getLoadedController<PatientTableController>().let {
             it.init(stage, node)
             it.init(this, "База данных")
             it.init()
             it.focusNode()
         }
 
-        buttonSaveAll.disableProperty().bind(Bindings.`when`(CardioDB.registry.isDirty).then(false).otherwise(true))
+        buttonSaveAll.disableProperty().bind(Bindings.`when`(CardioDB.app.registry.isDirty).then(false).otherwise(true))
         buttonSaveAll.setOnAction {
-            CardioDB.registry.saveAllAsync()
+            CardioDB.app.registry.saveAllAsync()
         }
 
         buttonCloseTab.disableProperty().bind(Bindings.equal(0, tabPane.selectionModel.selectedIndexProperty()))
@@ -64,8 +64,8 @@ class MainController : Controller<BorderPane>() {
     }
 
     fun <N : Node, T : ControllerTab<N>> openTab(name: String, fxmlPath: String): T {
-        val node = CardioDB.loadNode<N>(fxmlPath)
-        val controller = CardioDB.getLoadedController<T>()
+        val node = CardioDB.app.loadNode<N>(fxmlPath)
+        val controller = CardioDB.app.getLoadedController<T>()
         controller.let {
             it.init(stage, node)
             it.init(this, name)
@@ -84,14 +84,14 @@ class MainController : Controller<BorderPane>() {
     }
 
     fun requestUser() {
-        val res = TextInputDialog(CardioDB.user.value).apply {
+        val res = TextInputDialog(CardioDB.app.user.value).apply {
             title = "Пользователь"
             headerText = "Введите имя пользователя"
             initStyle(StageStyle.UTILITY)
         }.showAndWait()
 
         if (res.isPresent) {
-            CardioDB.user.value = res.get()
+            CardioDB.app.user.value = res.get()
         }
     }
 
@@ -101,7 +101,7 @@ class MainController : Controller<BorderPane>() {
         }
     }
 
-    open class ControllerTab<N : Node> : Controller<N>() {
+    open class ControllerTab<N : Node> : FXController<N>() {
         lateinit var main: MainController
             private set
         var tabName: String = ""

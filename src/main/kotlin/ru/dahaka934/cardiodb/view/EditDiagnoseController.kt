@@ -10,10 +10,10 @@ import ru.dahaka934.cardiodb.data.Diagnose
 import ru.dahaka934.cardiodb.data.MKB10
 import ru.dahaka934.cardiodb.data.MKB10.Entry
 import ru.dahaka934.cardiodb.util.SimpleLinkedTree
-import ru.dahaka934.cardiodb.view.internal.Controller
-import ru.dahaka934.cardiodb.view.internal.FXHelper
+import ru.dahaka934.cardiodb.fxlib.FXController
+import ru.dahaka934.cardiodb.fxlib.FXHelper
 
-class EditDiagnoseController : Controller<Pane>() {
+class EditDiagnoseController : FXController<Pane>() {
     @FXML lateinit var fieldType: ChoiceBox<String>
     @FXML lateinit var fieldCode: TextField
     @FXML lateinit var fieldInfo: TextField

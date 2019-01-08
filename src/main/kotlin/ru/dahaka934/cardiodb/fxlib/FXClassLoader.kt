@@ -1,4 +1,4 @@
-package ru.dahaka934.cardiodb.view.internal
+package ru.dahaka934.cardiodb.fxlib
 
 import java.io.IOException
 import java.net.URL
@@ -20,7 +20,7 @@ class FXClassLoader(parent: ClassLoader) : ClassLoader(parent) {
             }
         }
     }
-    
+
     override fun getResource(name: String): URL? {
         return parent.getResource(name)
     }

@@ -12,9 +12,9 @@ import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Patient
 import ru.dahaka934.cardiodb.data.Patient.Data
 import ru.dahaka934.cardiodb.data.Visit
+import ru.dahaka934.cardiodb.fxlib.internal.LocalDateConverter
+import ru.dahaka934.cardiodb.fxlib.internal.LocalDateISOConverter
 import ru.dahaka934.cardiodb.util.DocCreator
-import ru.dahaka934.cardiodb.util.LocalDateConverter
-import ru.dahaka934.cardiodb.util.LocalDateISOConverter
 import ru.dahaka934.cardiodb.util.createRun
 import ru.dahaka934.cardiodb.view.MainController.ControllerTab
 import java.math.BigInteger
@@ -143,7 +143,8 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         this.visit = visit
 
         headerName.textProperty().bind(patient.name)
-        headerBirthday.textProperty().bind(SimpleStringProperty(LocalDateConverter.toString(patient.birthday.value)))
+        headerBirthday.textProperty().bind(SimpleStringProperty(
+            LocalDateConverter.toString(patient.birthday.value)))
         headerVisitDate.valueProperty().bindBidirectional(visit.date)
 
         bind(complaintsP1)
@@ -218,8 +219,8 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(evnP4)
         bind(evnP5)
 
-        paneDiagnosis.content = CardioDB.loadNode("DiagnosisTableLayout.fxml")
-        controllerDiagnosis = CardioDB.getLoadedController()
+        paneDiagnosis.content = CardioDB.app.loadNode("DiagnosisTableLayout.fxml")
+        controllerDiagnosis = CardioDB.app.getLoadedController()
         controllerDiagnosis.init(visit.diagnoses)
     }
 
@@ -240,7 +241,8 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
 
     companion object {
         fun convertedDate(dateISO: String): String {
-            return LocalDateConverter.toString(LocalDateISOConverter.fromString(dateISO))
+            return LocalDateConverter.toString(
+                LocalDateISOConverter.fromString(dateISO))
         }
 
         fun String?.dot(): String {
@@ -388,7 +390,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             cr.line()
             cr.line()
             cr.paragraph {
-                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.user.value}", bold = true) {
+                createRun("Специалист ____________________ врач кардиолог   ${CardioDB.app.user.value}", bold = true) {
                     alignment = CENTER
                     fontSize = 10
                 }

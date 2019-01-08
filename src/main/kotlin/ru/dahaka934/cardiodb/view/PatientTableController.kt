@@ -16,10 +16,10 @@ import javafx.stage.Modality.APPLICATION_MODAL
 import javafx.stage.StageStyle
 import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Patient
-import ru.dahaka934.cardiodb.view.internal.FXHelper
-import ru.dahaka934.cardiodb.view.internal.TableDateCell
-import ru.dahaka934.cardiodb.view.internal.TableIndexCell
-import ru.dahaka934.cardiodb.view.internal.select
+import ru.dahaka934.cardiodb.fxlib.FXHelper
+import ru.dahaka934.cardiodb.fxlib.component.TableDateCell
+import ru.dahaka934.cardiodb.fxlib.component.TableIndexCell
+import ru.dahaka934.cardiodb.fxlib.select
 import java.time.LocalDate
 
 class PatientTableController : MainController.ControllerTab<VBox>() {
@@ -56,8 +56,8 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
         columnBirthday.style = "-fx-alignment: CENTER;"
         columnLastVisit.style = "-fx-alignment: CENTER;"
 
-        CardioDB.registry.reloadAsync().thenAccept {
-            table.items = CardioDB.registry.patients
+        CardioDB.app.registry.reloadAsync().thenAccept {
+            table.items = CardioDB.app.registry.patients
             buttonNew.isDisable = false
         }
         buttonNew.isDisable = true
@@ -133,13 +133,13 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
     }
 
     @FXML fun newPatient(e: ActionEvent) {
-        CardioDB.createWindow<EditPatientController>("EditPatientLayout.fxml") { controller ->
+        CardioDB.app.createWindow<EditPatientController>("EditPatientLayout.fxml") { controller ->
             title = "Новый пациент"
             isResizable = false
             initModality(APPLICATION_MODAL)
             setOnCloseRequest {
                 controller.output?.let {
-                    CardioDB.registry.register(it.first, it.second)
+                    CardioDB.app.registry.register(it.first, it.second)
                     table.select(it.first)
                 }
             }
@@ -148,7 +148,7 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
 
     @FXML fun editPatient(e: ActionEvent?) {
         val patient = table.selectionModel.selectedItem ?: return
-        CardioDB.createWindow<EditPatientController>("EditPatientLayout.fxml") { controller ->
+        CardioDB.app.createWindow<EditPatientController>("EditPatientLayout.fxml") { controller ->
             title = "Изменение пациента"
             isResizable = false
             controller.setPatient(patient)
@@ -172,7 +172,7 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
         }
 
         if (result.isPresent && result.get().buttonData == YES) {
-            CardioDB.registry.unregister(patient)
+            CardioDB.app.registry.unregister(patient)
             table.selectionModel.clearSelection()
         }
         Platform.runLater { table.requestFocus() }
@@ -198,8 +198,8 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
         fieldFilter.text = ""
         filterPanel.isVisible = false
 
-        if (CardioDB.registry.patients !== table.items) {
-            table.items = CardioDB.registry.patients
+        if (CardioDB.app.registry.patients !== table.items) {
+            table.items = CardioDB.app.registry.patients
         }
 
         focusNode()
@@ -208,9 +208,9 @@ class PatientTableController : MainController.ControllerTab<VBox>() {
     @FXML fun filterPatients(e: ActionEvent?) {
         val filter = fieldFilter.text
         if (filter.isEmpty()) {
-            table.items = CardioDB.registry.patients
+            table.items = CardioDB.app.registry.patients
         } else {
-            table.items = FilteredList<Patient>(CardioDB.registry.patients).apply {
+            table.items = FilteredList<Patient>(CardioDB.app.registry.patients).apply {
                 setPredicate {
                     it.name.value.startsWith(filter, ignoreCase = true)
                 }

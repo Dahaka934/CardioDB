@@ -1,6 +1,7 @@
-package ru.dahaka934.cardiodb.util
+package ru.dahaka934.cardiodb.fxlib.internal
 
 import javafx.util.StringConverter
+import ru.dahaka934.cardiodb.fxlib.tryWithError
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

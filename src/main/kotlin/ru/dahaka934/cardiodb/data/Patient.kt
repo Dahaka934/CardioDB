@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener.Change
+import ru.dahaka934.cardiodb.fxlib.internal.LocalizedObj
 import java.time.LocalDate
 
 class Patient : Listenable {

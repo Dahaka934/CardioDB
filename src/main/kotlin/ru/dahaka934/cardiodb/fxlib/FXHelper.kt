@@ -1,4 +1,4 @@
-package ru.dahaka934.cardiodb.view.internal
+package ru.dahaka934.cardiodb.fxlib
 
 import javafx.application.Platform
 import javafx.event.Event
@@ -14,7 +14,7 @@ import ru.dahaka934.cardiodb.CardioDB
 import ru.dahaka934.cardiodb.data.Diagnose
 import ru.dahaka934.cardiodb.data.Patient.Sex
 import ru.dahaka934.cardiodb.data.Visit.Type
-import ru.dahaka934.cardiodb.util.LocalizedEnumConverter
+import ru.dahaka934.cardiodb.fxlib.internal.LocalizedEnumConverter
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -73,7 +73,7 @@ object FXHelper {
 
     fun imageView(name: String, scale: Double = 1.0): ImageView {
         return ImageView().apply {
-            image = CardioDB.getIcon(name)
+            image = CardioDB.app.getIcon(name)
             fitWidth = image.width * scale
             fitHeight = image.height * scale
         }

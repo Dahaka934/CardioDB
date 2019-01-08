@@ -1,7 +1,7 @@
-package ru.dahaka934.cardiodb.view.internal
+package ru.dahaka934.cardiodb.fxlib.component
 
 import javafx.scene.control.TableCell
-import ru.dahaka934.cardiodb.util.LocalDateConverter
+import ru.dahaka934.cardiodb.fxlib.internal.LocalDateConverter
 import java.time.LocalDate
 
 class TableDateCell<T> : TableCell<T, LocalDate>() {

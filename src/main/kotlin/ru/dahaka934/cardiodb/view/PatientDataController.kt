@@ -15,15 +15,11 @@ import ru.dahaka934.cardiodb.data.Patient
 import ru.dahaka934.cardiodb.data.Visit
 import ru.dahaka934.cardiodb.data.Visit.Type
 import ru.dahaka934.cardiodb.data.Visit.Type.*
-import ru.dahaka934.cardiodb.util.LocalDateConverter
-import ru.dahaka934.cardiodb.util.toDir
-import ru.dahaka934.cardiodb.util.toExistsFile
-import ru.dahaka934.cardiodb.util.tryWithError
+import ru.dahaka934.cardiodb.fxlib.*
+import ru.dahaka934.cardiodb.fxlib.component.TableDateCell
+import ru.dahaka934.cardiodb.fxlib.component.TableIndexCell
+import ru.dahaka934.cardiodb.fxlib.internal.LocalDateConverter
 import ru.dahaka934.cardiodb.view.MainController.ControllerTab
-import ru.dahaka934.cardiodb.view.internal.FXHelper
-import ru.dahaka934.cardiodb.view.internal.TableDateCell
-import ru.dahaka934.cardiodb.view.internal.TableIndexCell
-import ru.dahaka934.cardiodb.view.internal.select
 import java.awt.Desktop
 import java.io.File
 import java.time.LocalDate
@@ -114,7 +110,7 @@ class PatientDataController : ControllerTab<Pane>() {
 
     fun setPatient(patient: Patient) {
         this.patient = patient
-        patientData = CardioDB.registry.getData(patient)
+        patientData = CardioDB.app.registry.getData(patient)
 
         fieldName.textProperty().bind(patient.name)
         fieldSex.textProperty().let {
