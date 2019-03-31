@@ -93,9 +93,9 @@ class PrimaryVisitController : BaseVisitController<ScrollPane>() {
                     "Наслед. ${visit.meta("anamLifeP7").dot()}")
 
             if (data.sex.value === Sex.FEMALE) {
-                cr.line("Последнее посещение гинеколога: ${convertedDate(visit.meta("anamLifeP8")).dot()}")
+                cr.line("Последнее посещение гинеколога: ${visit.meta("anamLifeP8").dot()}")
             }
-            cr.line("Последняя ФЛГ орг. гр. кл. (со слов): ${convertedDate(visit.meta("anamLifeP9")).dot()}")
+            cr.line("Последняя ФЛГ орг. гр. кл. (со слов): ${visit.meta("anamLifeP9").dot()}")
         }
 
         fun genDocBHabits(cr: DocCreator, patient: Patient, data: Data, visit: Visit) {

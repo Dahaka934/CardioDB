@@ -292,7 +292,7 @@
                                             </center>
                                         </BorderPane>
                                         <Label text="Акцент:" GridPane.rowIndex="11"/>
-                                        <TextField fx:id="objStatusP13" text="2т. на аорте" GridPane.columnIndex="1"
+                                        <TextField fx:id="objStatusP13" GridPane.columnIndex="1"
                                                    GridPane.rowIndex="11"/>
                                         <Label text="Шумы:" GridPane.rowIndex="12"/>
                                         <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"

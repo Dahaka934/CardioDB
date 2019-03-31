@@ -180,15 +180,15 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         bind(objStatusP7)
         bind(objStatusP8)
         bind(objStatusP9, "ЧСС=PS", "ЧЖС≠PS")
-        bind(objStatusP10, "уд/мин.")
+        bind(objStatusP10, "")
         bind(objStatusP11, objStatusP11c, true, false, "ритмичный", "аритмичный", "дефицита пульса нет",
              "удовлетворительного наполнения и напряжения", "напряжён")
         bind(objStatusP12, objStatusP12c, true, false, "ясные", "звучные", "приглушены", "глухие", "ритмичные",
              "аритмичные")
-        bind(objStatusP13)
+        bind(objStatusP13, "2т. на аорте")
         bind(objStatusP14, objStatusP14c, true, false, "не выслушиваются", "систолический выслушивается",
              "диастолический выслушивается")
-        bind(objStatusP15, "в мин.")
+        bind(objStatusP15, "")
         bind(objStatusP16, objStatusP16c, true, false, "везикулярное", "жесткое", "жестковатое",
              "ослабленное", "сухие хрипы", "влажные хрипы", "хрипов нет", "не выслушивается")
         bind(objStatusP17, objStatusP17c, false, true, "мягкий", "напряженный")
@@ -279,7 +279,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
             }
 
             cr.line()
-            cr.line("Дата консльтации:  ${LocalDateConverter.toString(patient.lastVisit.value).dot()}")
+            cr.line("Дата консультации:  ${LocalDateConverter.toString(patient.lastVisit.value).dot()}")
             cr.line()
         }
 
@@ -404,7 +404,7 @@ abstract class BaseVisitController<N : Node> : ControllerTab<N>() {
         fun genPlace(cr: DocCreator) {
             cr.paragraph {
                 style = "Top"
-                createRun(CardioDB.app.user.place, 9, true)
+                createRun(CardioDB.app.user.place, 13, true)
             }
         }
 
